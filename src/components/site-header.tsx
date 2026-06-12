@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import logo from "@/assets/lawgichub-logo.jpeg";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -8,7 +9,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
         <Link to="/" className="flex items-center gap-3 text-xl font-bold tracking-tight">
-          <img src="/src/assets/lawgichub-logo.jpeg" alt="LawgicHub" className="h-14 w-auto object-contain" />
+          <img src={logo} alt="LawgicHub" className="h-14 w-auto object-contain" />
           <span className="flex items-center gap-1.5">
             Suraksha
             <span className="size-2 rounded-full bg-primary" aria-hidden />
