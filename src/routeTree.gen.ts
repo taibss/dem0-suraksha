@@ -9,18 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ScamsRouteImport } from './routes/scams'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ScamsIndexRouteImport } from './routes/scams.index'
 import { Route as HelpIndexRouteImport } from './routes/help.index'
+import { Route as ScamsScamIdRouteImport } from './routes/scams.$scamId'
 import { Route as HelpDoorRouteImport } from './routes/help.$door'
 import { Route as HelpLeafLeafIdRouteImport } from './routes/help.leaf.$leafId'
 
-const ScamsRoute = ScamsRouteImport.update({
-  id: '/scams',
-  path: '/scams',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
@@ -31,9 +27,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScamsIndexRoute = ScamsIndexRouteImport.update({
+  id: '/scams/',
+  path: '/scams/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HelpIndexRoute = HelpIndexRouteImport.update({
   id: '/help/',
   path: '/help/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScamsScamIdRoute = ScamsScamIdRouteImport.update({
+  id: '/scams/$scamId',
+  path: '/scams/$scamId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HelpDoorRoute = HelpDoorRouteImport.update({
@@ -50,26 +56,29 @@ const HelpLeafLeafIdRoute = HelpLeafLeafIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/how-it-works': typeof HowItWorksRoute
-  '/scams': typeof ScamsRoute
   '/help/$door': typeof HelpDoorRoute
+  '/scams/$scamId': typeof ScamsScamIdRoute
   '/help/': typeof HelpIndexRoute
+  '/scams/': typeof ScamsIndexRoute
   '/help/leaf/$leafId': typeof HelpLeafLeafIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/how-it-works': typeof HowItWorksRoute
-  '/scams': typeof ScamsRoute
   '/help/$door': typeof HelpDoorRoute
+  '/scams/$scamId': typeof ScamsScamIdRoute
   '/help': typeof HelpIndexRoute
+  '/scams': typeof ScamsIndexRoute
   '/help/leaf/$leafId': typeof HelpLeafLeafIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/how-it-works': typeof HowItWorksRoute
-  '/scams': typeof ScamsRoute
   '/help/$door': typeof HelpDoorRoute
+  '/scams/$scamId': typeof ScamsScamIdRoute
   '/help/': typeof HelpIndexRoute
+  '/scams/': typeof ScamsIndexRoute
   '/help/leaf/$leafId': typeof HelpLeafLeafIdRoute
 }
 export interface FileRouteTypes {
@@ -77,46 +86,43 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/how-it-works'
-    | '/scams'
     | '/help/$door'
+    | '/scams/$scamId'
     | '/help/'
+    | '/scams/'
     | '/help/leaf/$leafId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/how-it-works'
-    | '/scams'
     | '/help/$door'
+    | '/scams/$scamId'
     | '/help'
+    | '/scams'
     | '/help/leaf/$leafId'
   id:
     | '__root__'
     | '/'
     | '/how-it-works'
-    | '/scams'
     | '/help/$door'
+    | '/scams/$scamId'
     | '/help/'
+    | '/scams/'
     | '/help/leaf/$leafId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HowItWorksRoute: typeof HowItWorksRoute
-  ScamsRoute: typeof ScamsRoute
   HelpDoorRoute: typeof HelpDoorRoute
+  ScamsScamIdRoute: typeof ScamsScamIdRoute
   HelpIndexRoute: typeof HelpIndexRoute
+  ScamsIndexRoute: typeof ScamsIndexRoute
   HelpLeafLeafIdRoute: typeof HelpLeafLeafIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/scams': {
-      id: '/scams'
-      path: '/scams'
-      fullPath: '/scams'
-      preLoaderRoute: typeof ScamsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/how-it-works': {
       id: '/how-it-works'
       path: '/how-it-works'
@@ -131,11 +137,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scams/': {
+      id: '/scams/'
+      path: '/scams'
+      fullPath: '/scams/'
+      preLoaderRoute: typeof ScamsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/help/': {
       id: '/help/'
       path: '/help'
       fullPath: '/help/'
       preLoaderRoute: typeof HelpIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scams/$scamId': {
+      id: '/scams/$scamId'
+      path: '/scams/$scamId'
+      fullPath: '/scams/$scamId'
+      preLoaderRoute: typeof ScamsScamIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/help/$door': {
@@ -158,9 +178,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HowItWorksRoute: HowItWorksRoute,
-  ScamsRoute: ScamsRoute,
   HelpDoorRoute: HelpDoorRoute,
+  ScamsScamIdRoute: ScamsScamIdRoute,
   HelpIndexRoute: HelpIndexRoute,
+  ScamsIndexRoute: ScamsIndexRoute,
   HelpLeafLeafIdRoute: HelpLeafLeafIdRoute,
 }
 export const routeTree = rootRouteImport

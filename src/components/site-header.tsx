@@ -27,6 +27,12 @@ export function SiteHeader() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-7 md:flex">
+          <Link to="/scams" className="text-sm font-semibold transition-colors hover:text-primary">
+            Scam radar
+          </Link>
+          <Link to="/how-it-works" className="text-sm font-semibold transition-colors hover:text-primary">
+            How it works
+          </Link>
           <div className="relative">
             <button
               onClick={() => setDropdownOpen((v) => !v)}

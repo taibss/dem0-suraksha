@@ -54,7 +54,7 @@ function Home() {
           </p>
           <div className="mt-6 flex max-w-md flex-col gap-3">
             <Link
-              to="/help"
+              to="/scams"
               className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-foreground bg-primary px-6 py-4 text-base font-semibold text-primary-foreground shadow-[5px_5px_0_0_var(--foreground)] transition-all hover:-translate-y-0.5 hover:shadow-[7px_7px_0_0_var(--foreground)]"
             >
               Show me the scams
@@ -70,32 +70,6 @@ function Home() {
         </div>
       </section>
 
-
-      {/* Panic fast path */}
-      <section className="bg-red-950 text-white">
-        <div className="mx-auto max-w-6xl px-5 py-10">
-          <p className="text-xs font-bold uppercase tracking-widest text-red-400">🚨 Emergency — act now</p>
-          <p className="mt-1.5 text-sm text-white/70">Skip the menus. Go straight to your action plan.</p>
-          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <Link
-              to="/help/leaf/$leafId"
-              params={{ leafId: "upi_paid_blocked" }}
-              className="flex items-center justify-between gap-3 rounded-2xl border-2 border-red-500 bg-red-600 px-6 py-5 font-bold text-white shadow-[4px_4px_0_0_#7f1d1d] transition-transform hover:-translate-y-0.5"
-            >
-              <span className="text-base leading-tight">💸 Money just left my account</span>
-              <ArrowRight className="size-5 shrink-0" />
-            </Link>
-            <Link
-              to="/help/leaf/$leafId"
-              params={{ leafId: "known_person_threat" }}
-              className="flex items-center justify-between gap-3 rounded-2xl border-2 border-red-500 bg-red-600 px-6 py-5 font-bold text-white shadow-[4px_4px_0_0_#7f1d1d] transition-transform hover:-translate-y-0.5"
-            >
-              <span className="text-base leading-tight">⚠️ Someone is threatening me right now</span>
-              <ArrowRight className="size-5 shrink-0" />
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Four doors */}
       <section className="bg-background">

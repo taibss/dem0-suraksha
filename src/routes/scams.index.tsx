@@ -14,7 +14,7 @@ const RADAR = [
   { tag: "Serious", title: "Sextortion", body: "Recorded video call, threats to leak.", leaf: "sextortion_real" },
 ];
 
-export const Route = createFileRoute("/scams")({
+export const Route = createFileRoute("/scams/")({
   head: () => ({
     meta: [
       { title: "Scam Radar — Suraksha" },
@@ -47,15 +47,15 @@ function Scams() {
             {RADAR.map((r) => (
               <Link
                 key={r.title}
-                to="/help/leaf/$leafId"
-                params={{ leafId: r.leaf }}
+                to="/scams/$scamId"
+                params={{ scamId: r.leaf }}
                 className="group block rounded-2xl border-2 border-foreground bg-card p-5 shadow-[4px_4px_0_0_var(--foreground)] transition-transform hover:-translate-y-1 hover:shadow-[6px_6px_0_0_var(--foreground)]"
               >
                 <span className="eyebrow text-primary">{r.tag}</span>
                 <h3 className="mt-2 font-display text-lg font-bold leading-snug">{r.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{r.body}</p>
                 <div className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">
-                  Open plan <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  See how it works <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
             ))}
