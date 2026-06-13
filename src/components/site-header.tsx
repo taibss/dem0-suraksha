@@ -1,14 +1,19 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Banknote, ShieldAlert, Building2, Users } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/lawgichub-logo.jpeg";
 
 const DOORS = [
-  { id: "money", emoji: "💸", label: "I lost money" },
-  { id: "threats", emoji: "⚠️", label: "Someone is threatening me" },
-  { id: "process", emoji: "🏛", label: "Police / Bank problem" },
-  { id: "other", emoji: "🏠", label: "Work, Home, Family" },
+  { id: "money", icon: <Banknote className="size-4" />, label: "I lost money" },
+  { id: "threats", icon: <ShieldAlert className="size-4" />, label: "Someone is threatening me" },
+  { id: "process", icon: <Building2 className="size-4" />, label: "Police / Bank problem" },
+  { id: "other", icon: <Users className="size-4" />, label: "Work, Home, Family" },
 ];
+
+function scrollToRights() {
+  const el = document.getElementById("rights");
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+}
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -33,6 +38,12 @@ export function SiteHeader() {
           <Link to="/how-it-works" className="text-sm font-semibold transition-colors hover:text-primary">
             How it works
           </Link>
+          <button
+            onClick={scrollToRights}
+            className="text-sm font-semibold transition-colors hover:text-primary"
+          >
+            Your rights
+          </button>
           <div className="relative">
             <button
               onClick={() => setDropdownOpen((v) => !v)}
@@ -52,7 +63,7 @@ export function SiteHeader() {
                       onClick={() => setDropdownOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-muted border-b border-border last:border-0"
                     >
-                      <span>{d.emoji}</span>
+                      <span className="text-primary">{d.icon}</span>
                       {d.label}
                     </Link>
                   ))}
@@ -83,7 +94,7 @@ export function SiteHeader() {
                       onClick={() => setDropdownOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-muted border-b border-border last:border-0"
                     >
-                      <span>{d.emoji}</span>
+                      <span className="text-primary">{d.icon}</span>
                       {d.label}
                     </Link>
                   ))}
@@ -100,6 +111,7 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="border-t border-border bg-background md:hidden">
@@ -110,6 +122,12 @@ export function SiteHeader() {
             <Link to="/how-it-works" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted">
               How it works
             </Link>
+            <button
+              onClick={() => { setMobileOpen(false); scrollToRights(); }}
+              className="rounded-md px-3 py-2 text-left text-sm font-medium hover:bg-muted"
+            >
+              Your rights
+            </button>
           </div>
         </div>
       )}

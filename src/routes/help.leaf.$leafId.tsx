@@ -2,7 +2,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { TREE } from "@/lib/tree";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { ChevronLeft, Home as HomeIcon, AlertTriangle, Shield, FileText, Scale, Phone } from "lucide-react";
+import { ChevronLeft, Home as HomeIcon, AlertTriangle, Shield, FileText, Scale, Phone, Upload } from "lucide-react";
+import { useRef, useState } from "react";
 
 export const Route = createFileRoute("/help/leaf/$leafId")({
   head: ({ params }) => {
@@ -52,6 +53,57 @@ function ActionItem({ text, index, badge }: { text: string; index: number; badge
   );
 }
 
+function EvidenceChecklist({ items }: { items: string[] }) {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [files, setFiles] = useState<string[]>([]);
+
+  function handleFiles(e: React.ChangeEvent<HTMLInputElement>) {
+    const selected = Array.from(e.target.files || []).map(f => f.name);
+    setFiles(prev => [...prev, ...selected]);
+  }
+
+  return (
+    <div>
+      <ul className="space-y-2 text-sm">
+        {items.map((e, i) => (
+          <li key={i}>
+            <label className="flex cursor-pointer items-center gap-2.5">
+              <input type="checkbox" className="size-4 accent-primary" /> {e}
+            </label>
+          </li>
+        ))}
+      </ul>
+
+      {/* Upload button */}
+      <div className="mt-4 border-t border-border pt-4">
+        <input
+          ref={fileRef}
+          type="file"
+          multiple
+          accept="image/*,.pdf"
+          className="hidden"
+          onChange={handleFiles}
+        />
+        <button
+          onClick={() => fileRef.current?.click()}
+          className="flex items-center gap-2 rounded-xl border-2 border-dashed border-border px-4 py-2.5 text-sm text-muted-foreground hover:border-foreground hover:text-foreground transition-colors w-full justify-center"
+        >
+          <Upload className="size-4" /> Upload screenshots or proof
+        </button>
+        {files.length > 0 && (
+          <ul className="mt-2 space-y-1">
+            {files.map((f, i) => (
+              <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span className="text-primary">✓</span> {f}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function LeafPage() {
   const { leafId } = Route.useParams();
   const leaf = TREE.leaves[leafId];
@@ -86,7 +138,7 @@ function LeafPage() {
             <p className="mt-2 text-lg text-foreground/90">{leaf.explanation}</p>
           </div>
 
-          {/* Action grid */}
+          {/* Action grid — swapped order: Do this now, Authorities, Evidence, Drafts */}
           <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
             <PlanCard icon={<AlertTriangle className="size-5" />} eyebrow="Do this now" tint="lime">
               <ol className="space-y-2.5">
@@ -96,24 +148,16 @@ function LeafPage() {
               </ol>
             </PlanCard>
 
-            <PlanCard icon={<Shield className="size-5" />} eyebrow="Evidence checklist" tint="ink">
-              <ul className="space-y-2 text-sm">
-                {leaf.evidence.map((e, i) => (
-                  <li key={i}>
-                    <label className="flex cursor-pointer items-center gap-2.5">
-                      <input type="checkbox" className="size-4 accent-primary" /> {e}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </PlanCard>
-
             <PlanCard icon={<Scale className="size-5" />} eyebrow="Authorities & routes" tint="primary">
               <ol className="space-y-2.5">
                 {leaf.authorities.map((a, i) => (
                   <ActionItem key={i} text={a} index={i} badge="red" />
                 ))}
               </ol>
+            </PlanCard>
+
+            <PlanCard icon={<Shield className="size-5" />} eyebrow="Evidence checklist" tint="ink">
+              <EvidenceChecklist items={leaf.evidence} />
             </PlanCard>
 
             <PlanCard icon={<FileText className="size-5" />} eyebrow="Drafts we can prep" tint="card">

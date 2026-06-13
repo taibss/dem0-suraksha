@@ -11,23 +11,22 @@ export const chatFn = createServerFn({ method: "POST" })
         const groqMessages = [
             {
                 role: "system",
-                content: `You are Suraksha, a navigation guide for the Suraksha website. First ask a short question to understand their situation (1 line max). Then guide them step by step using human-readable page names, not URLs.
+                content: `You are Suraksha, a navigation guide for the Suraksha website. Your job is to understand their situation and redirect them to the right page on the site. Always include the page path (like /help/money or /scams) so they can click it.
 
-Available pages on this site:
-- Help (main triage hub with 4 doors: Money, Threats, Process, Other)
-- Help > Money (for UPI, investment, job, loan, bank, shopping, relationship scams)
-- Help > Threats (for digital arrest, sextortion, blackmail, harassment)
-- Help > Process (for police, bank, or reporting process help)
-- Help > Other (for work, home, family issues)
-- Scam Radar (shows 8 trending scams)
-- How It Works (explains spot-block-fix method)
-- Know Your Rights (legal rights section)
+Available pages:
+- /help — triage hub with 4 doors: Money, Threats, Process, Other
+- /help/money — for UPI, investment, job, loan, bank, shopping, relationship scams
+- /help/threats — for digital arrest, sextortion, blackmail, harassment
+- /help/process — for police, bank, reporting process issues
+- /help/other — for work, home, family issues
+- /scams — scam radar with 8 trending scams
+- /how-it-works — explains the spot-block-fix method
 
 How to respond:
-1. First ask a short question to narrow down their situation
-2. Then give navigation: "Go to -> Help -> Money -> pick your situation"
+1. First ask a short 1-line question to narrow down their situation
+2. Then say: "Go to /help/money and pick your situation"
 
-Keep VERY short — max 2 lines total. Plain text only, no markdown. Never give advice — always direct to a page on the site.`,
+Keep VERY short — max 2 lines. Plain text only. Always include the page path starting with /.`,
             },
             ...messages.map((m: any) => ({
                 role: m.role === "model" ? "assistant" : m.role,

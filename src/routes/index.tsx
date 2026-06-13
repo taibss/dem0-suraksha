@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { TREE } from "@/lib/tree";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -182,6 +182,37 @@ function RightsSectionDark() {
     </div>
   );
 }
+function MessageText({ text }: { text: string }) {
+  const navigate = useNavigate();
+  const linkRegex = /\/(help|scams|how-it-works)(?:\/\S*)?/g;
+  const parts: (string | { path: string })[] = [];
+  let last = 0;
+  let match: RegExpExecArray | null;
+  while ((match = linkRegex.exec(text)) !== null) {
+    if (match.index > last) parts.push(text.slice(last, match.index));
+    parts.push({ path: match[0] });
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return (
+    <>
+      {parts.map((p, i) =>
+        typeof p === "string" ? (
+          <span key={i}>{p}</span>
+        ) : (
+          <button
+            key={i}
+            onClick={() => navigate({ to: p.path })}
+            className="underline font-semibold hover:text-primary cursor-pointer bg-transparent border-none p-0 inline"
+          >
+            {p.path}
+          </button>
+        )
+      )}
+    </>
+  );
+}
+
 function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -189,7 +220,7 @@ function Chatbot() {
       role: "model",
       parts: [
         {
-          text: "Hey! I'm Suraksha 👋 Got scammed or something feels off? I'm here to help.",
+          text: "Hey! I'm Suraksha 👋 What happened?",
         },
       ],
     },
@@ -198,10 +229,23 @@ function Chatbot() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const processedCount = useRef(1);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    if (messages.length > processedCount.current) {
+      const last = messages[messages.length - 1];
+      if (last.role === "model") {
+        const match = last.parts[0].text.match(/\/(help|scams|how-it-works)(?:\/\S*)?/);
+        if (match) navigate({ to: match[0] });
+      }
+      processedCount.current = messages.length;
+    }
+  }, [messages]);
 
   async function send() {
     if (!input.trim() || loading) return;
@@ -292,7 +336,7 @@ function Chatbot() {
                     : "bg-muted text-foreground"
                     }`}
                 >
-                  {m.parts[0].text}
+                  <MessageText text={m.parts[0].text} />
                 </div>
               </div>
             ))}
@@ -367,7 +411,7 @@ function Home() {
 
       {/* Hero */}
       <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-6xl px-5 py-8 md:py-12">
+        <div className="mx-auto max-w-6xl px-5 py-12 md:py-20">
           <span className="inline-flex items-center rounded-full bg-lime px-4 py-1.5 text-xs font-bold tracking-widest text-lime-foreground">
             MUMBAI'S SCAM DEFENCE
           </span>
