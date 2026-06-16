@@ -401,8 +401,7 @@ function Chatbot() {
 
       {open && (
         <div
-          className="fixed bottom-24 right-6 z-50 w-80 rounded-2xl border-2 border-foreground bg-background shadow-[4px_4px_0_0_var(--foreground)] flex flex-col overflow-hidden"
-          style={{ height: "420px" }}
+          className="fixed bottom-24 right-6 z-50 w-80 h-[420px] rounded-2xl border-2 border-foreground bg-background shadow-[4px_4px_0_0_var(--foreground)] flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div className="flex items-center gap-2 px-4 py-3 border-b border-border shrink-0">
@@ -525,290 +524,286 @@ function Home() {
         )}
       </AnimatePresence>
       <div className="min-h-screen">
-      <SiteHeader />
+        <SiteHeader />
 
-      {/* Pulse strip */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0 }}
-      >
-        <div className="bg-ink text-ink-foreground">
-        <div className="mx-auto flex max-w-6xl items-center gap-3 overflow-hidden px-5 py-2.5">
-          <span className="eyebrow shrink-0 text-lime">● Live</span>
-          <div className="relative flex-1 overflow-hidden">
-            <div className="marquee-track text-sm">
-              {[...PULSE, ...PULSE].map((t, i) => (
-                <span key={i} className="opacity-90">{t} <span className="text-lime/70">·</span></span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-        </motion.div>
-
-      {/* Hero */}
-      <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-6xl px-5 py-12 md:py-20">
-          <motion.span
-            initial={{ opacity: 0, y: 24 }}
-            animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="inline-flex items-center rounded-full bg-lime px-4 py-1.5 text-xs font-bold tracking-widest text-lime-foreground"
-          >
-            MUMBAI'S SCAM DEFENCE
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-            className="mt-4 font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[0.95] tracking-tight"
-          >
-            Got scammed?<br />We fix that.
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-            className="mt-4 max-w-md text-base text-primary-foreground/85"
-          >
-            Lawyer on call. Complaint drafted. No cap, no wait.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
-            className="mt-6"
-          >
-            <Link
-              to="/scams"
-              className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-foreground bg-primary px-6 py-4 text-base font-semibold text-primary-foreground shadow-[5px_5px_0_0_var(--foreground)] transition-all hover:-translate-y-0.5"
-            >
-              Show me the scams
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-      {/* Four doors */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={cardsReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      >
-      <section
-        style={{
-          backgroundColor: "#f0f0f0ff",
-        }}
-      >
-        <div className="mx-auto max-w-6xl px-5 py-8">
-          <div className="mb-4">
-            <p className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight tracking-tight uppercase">
-              WHAT ARE WE DEALING WITH?
-            </p>
-            <h4>
-              <p className="mt-1 text-sm text-muted-foreground">give us the lore</p></h4>
-          </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {TREE.doors.map((d, i) => (
-              <Link
-                key={d.id}
-                to="/help/$door"
-                params={{ door: d.id }}
-                style={DOOR_STYLES[i % 4].style}
-                className={`group relative rounded-2xl p-6 ${i % 4 === 2 ? "shadow-[5px_5px_0_0_white]" : "shadow-[5px_5px_0_0_var(--foreground)]"} transition-transform hover:-translate-y-1 ${DOOR_STYLES[i % 4].bg}`}
-              >
-                <div className="text-3xl">{d.emoji}</div>
-                <div className="mt-3 font-display text-xl font-extrabold">{d.title}</div>
-                <p className="mt-1 text-sm opacity-75">{d.subtitle}</p>
-                <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold">
-                  Get help <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-      </motion.div>
-      {/* Emergency Alert Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={emergencyReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      >
-      <section
-        style={{
-          backgroundColor: "#f0f0f0ff",
-        }}
-      >
-        <div className="mx-auto max-w-6xl px-5 py-4">
-          <div className="rounded-2xl bg-[#B91C1C] px-5 py-4 shadow-[5px_5px_0_0_rgba(0,0,0,0.15)]">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="size-2 rounded-full bg-[#FFD6D6] animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
-                Emergency Alert
-              </span>
-            </div>
-
-            <h2 className="font-display text-xl font-extrabold text-white leading-tight">
-              Scammed in the last 24 hours?
-            </h2>
-
-            <p className="mt-1 text-sm text-white/85 max-w-lg">
-              Call <span className="font-bold text-[#FFD6D6]">1930</span> immediately —
-              banks can still freeze funds if you act fast.
-            </p>
-
-            <div className="mt-3 grid grid-cols-3 gap-3 border-t border-white/20 pt-3 mb-3">
-              {[
-                ["24 hrs", "golden window"],
-                ["₹3.1Cr", "frozen this week"],
-                ["12k+", "citizens helped"],
-              ].map(([stat, label]) => (
-                <div key={label}>
-                  <p className="text-lg font-extrabold text-white font-display">
-                    {stat}
-                  </p>
-                  <p className="text-[10px] text-white/60">
-                    {label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <a
-                href="tel:1930"
-                className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-bold text-[#B91C1C] transition-all hover:-translate-y-0.5"
-              >
-                <Phone className="size-3.5" />
-                Call 1930 now
-              </a>
-
-              <Link
-                to="/help/$door"
-                params={{ door: "money" }}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/70 px-4 py-2 text-xs font-semibold text-white hover:bg-white hover:text-[#B91C1C] transition-colors"
-              >
-                Walk me through it
-                <ArrowRight className="size-3.5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={emergencyReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      >
-      <section
-        id="rights"
-        style={{
-          backgroundColor: "#f0f0f0ff",
-        }}
-      >
-        <div className="mx-auto max-w-6xl px-5 py-12">
-          <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Know your rights</p>
-          <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
-            Things every Indian should know.
-          </h2>
-          {/* Single card */}
-          <div className="relative overflow-hidden rounded-2xl bg-lime flex flex-col md:flex-row">
-            {/* Barcode left */}
-            <div className="hidden md:flex flex-col justify-center px-5 py-8 gap-1 shrink-0">
-              {Array.from({ length: 18 }).map((_, i) => (
-                <div key={i} style={{ height: `${[6, 4, 8, 3, 7, 5, 9, 4, 6, 8, 3, 7, 5, 4, 9, 6, 4, 7][i]}px` }} className="w-5 bg-[#1a4a2e] rounded-sm opacity-80" />
-              ))}
-            </div>
-            {/* Main content */}
-            <div className="flex-1 px-6 py-8">
-              <div className="flex items-center gap-3 mb-1">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1a4a2e" strokeWidth="1.5" className="shrink-0">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                </svg>
-                <div>
-                  <p className="font-display text-xl font-extrabold text-[#1a4a2e] leading-tight">Know Your Rights.</p>
-                  <p className="text-sm font-semibold text-[#1a4a2e]/70">Globally protected. Locally enforced.</p>
+        {/* Pulse strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0 }}
+        >
+          <div className="bg-ink text-ink-foreground">
+            <div className="mx-auto flex max-w-6xl items-center gap-3 overflow-hidden px-5 py-2.5">
+              <span className="eyebrow shrink-0 text-lime">● Live</span>
+              <div className="relative flex-1 overflow-hidden">
+                <div className="marquee-track text-sm">
+                  {[...PULSE, ...PULSE].map((t, i) => (
+                    <span key={i} className="opacity-90">{t} <span className="text-lime/70">·</span></span>
+                  ))}
                 </div>
               </div>
-              <div className="mt-5 space-y-3">
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Hero */}
+        <section className="bg-primary text-primary-foreground">
+          <div className="mx-auto max-w-6xl px-5 py-12 md:py-20">
+            <motion.span
+              initial={{ opacity: 0, y: 24 }}
+              animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              className="inline-flex items-center rounded-full bg-lime px-4 py-1.5 text-xs font-bold tracking-widest text-lime-foreground"
+            >
+              MUMBAI'S SCAM DEFENCE
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              className="mt-4 font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[0.95] tracking-tight"
+            >
+              Got scammed?<br />We fix that.
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+              className="mt-4 max-w-md text-base text-primary-foreground/85"
+            >
+              Lawyer on call. Complaint drafted. No cap, no wait.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={contentReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
+              className="mt-6"
+            >
+              <Link
+                to="/scams"
+                className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-foreground bg-primary px-6 py-4 text-base font-semibold text-primary-foreground shadow-[5px_5px_0_0_var(--foreground)] transition-all hover:-translate-y-0.5"
+              >
+                Show me the scams
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+        {/* Four doors */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={cardsReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <section
+            style={{
+              backgroundColor: "#f0f0f0ff",
+            }}
+          >
+            <div className="mx-auto max-w-6xl px-5 py-8">
+              <div className="mb-4">
+                <p className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight tracking-tight uppercase">
+                  WHAT ARE WE DEALING WITH?
+                </p>
+                <h4>
+                  <p className="mt-1 text-sm text-muted-foreground">give us the lore</p></h4>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {TREE.doors.map((d, i) => (
+                  <Link
+                    key={d.id}
+                    to="/help/$door"
+                    params={{ door: d.id }}
+                    style={DOOR_STYLES[i % 4].style}
+                    className={`group relative rounded-2xl p-6 ${i % 4 === 2 ? "shadow-[5px_5px_0_0_white]" : "shadow-[5px_5px_0_0_var(--foreground)]"} transition-transform hover:-translate-y-1 ${DOOR_STYLES[i % 4].bg}`}
+                  >
+                    <div className="text-3xl">{d.emoji}</div>
+                    <div className="mt-3 font-display text-xl font-extrabold">{d.title}</div>
+                    <p className="mt-1 text-sm opacity-75">{d.subtitle}</p>
+                    <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold">
+                      Get help <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        </motion.div>
+        {/* Emergency Alert Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={emergencyReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <section
+            style={{
+              backgroundColor: "#f0f0f0ff",
+            }}
+          >
+            <div className="mx-auto max-w-6xl px-5 py-4">
+              <div className="rounded-2xl bg-[#B91C1C] px-5 py-4 shadow-[5px_5px_0_0_rgba(0,0,0,0.15)]">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="size-2 rounded-full bg-[#FFD6D6] animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+                    Emergency Alert
+                  </span>
+                </div>
+
+                <h2 className="font-display text-xl font-extrabold text-white leading-tight">
+                  Scammed in the last 24 hours?
+                </h2>
+
+                <p className="mt-1 text-sm text-white/85 max-w-lg">
+                  Call <span className="font-bold text-[#FFD6D6]">1930</span> immediately —
+                  banks can still freeze funds if you act fast.
+                </p>
+
+                <div className="mt-3 grid grid-cols-3 gap-3 border-t border-white/20 pt-3 mb-3">
+                  {[
+                    ["24 hrs", "golden window"],
+                    ["₹3.1Cr", "frozen this week"],
+                    ["12k+", "citizens helped"],
+                  ].map(([stat, label]) => (
+                    <div key={label}>
+                      <p className="text-lg font-extrabold text-white font-display">
+                        {stat}
+                      </p>
+                      <p className="text-[10px] text-white/60">
+                        {label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href="tel:1930"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-bold text-[#B91C1C] transition-all hover:-translate-y-0.5"
+                  >
+                    <Phone className="size-3.5" />
+                    Call 1930 now
+                  </a>
+
+                  <Link
+                    to="/help/$door"
+                    params={{ door: "money" }}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/70 px-4 py-2 text-xs font-semibold text-white hover:bg-white hover:text-[#B91C1C] transition-colors"
+                  >
+                    Walk me through it
+                    <ArrowRight className="size-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={emergencyReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <section
+            id="rights"
+            style={{
+              backgroundColor: "#f0f0f0ff",
+            }}
+          >
+            <div className="mx-auto max-w-6xl px-5 py-12">
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Know your rights</p>
+              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
+                Things every Indian should know.
+              </h2>
+              {/* Single card */}
+              <div className="relative overflow-hidden rounded-2xl bg-lime flex flex-col md:flex-row">
+                {/* Barcode left */}
+                <div className="hidden md:flex flex-col justify-center px-5 py-8 gap-1 shrink-0">
+                  {Array.from({ length: 18 }).map((_, i) => (
+                    <div key={i} style={{ height: `${[6, 4, 8, 3, 7, 5, 9, 4, 6, 8, 3, 7, 5, 4, 9, 6, 4, 7][i]}px` }} className="w-5 bg-[#1a4a2e] rounded-sm opacity-80" />
+                  ))}
+                </div>
+                {/* Main content */}
+                <div className="flex-1 px-6 py-8">
+                  <div className="flex items-center gap-3 mb-1">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1a4a2e" strokeWidth="1.5" className="shrink-0">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                    <div>
+                      <p className="font-display text-xl font-extrabold text-[#1a4a2e] leading-tight">Know Your Rights.</p>
+                      <p className="text-sm font-semibold text-[#1a4a2e]/70">Globally protected. Locally enforced.</p>
+                    </div>
+                  </div>
+                  <div className="mt-5 space-y-3">
+                    {[
+                      "No police station can legally refuse to register your FIR",
+                      "Banks must give zero liability if fraud is reported within 3 days",
+                      "Digital arrest does not exist — hang up immediately",
+                      "Screenshots and WhatsApp chats are valid evidence in court",
+                      "You can report cybercrime anonymously via 1930 or cybercrime.gov.in",
+                      "First legal consultation is free via District Legal Aid",
+                    ].map((right) => (
+                      <div key={right} className="flex items-start gap-3">
+                        <span className="mt-0.5 size-5 rounded-full bg-[#1a4a2e] flex items-center justify-center shrink-0">
+                          <svg width="10" height="10" viewBox="0 0 12 10" fill="none">
+                            <path d="M1 5l3.5 3.5L11 1" stroke="#bef264" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </span>
+                        <span className="text-sm font-medium text-[#1a4a2e]">{right}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <button className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1a4a2e] px-5 py-2.5 text-sm font-bold text-lime">
+                    Learn more about your rights →
+                  </button>
+                </div>
+                {/* Globe watermark */}
+                <div className="absolute bottom-0 right-0 opacity-10 pointer-events-none">
+                  <svg width="220" height="220" viewBox="0 0 24 24" fill="none" stroke="#1a4a2e" strokeWidth="0.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    <path d="M12 2v20" />
+                    <path d="M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </section>
+          {/* How it works */}
+          <section className="bg-[#f0f0f0]">
+            <div className="mx-auto max-w-6xl px-5 py-12">
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">How it works</p>
+              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
+                Three moves. One unbothered you.
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
-                  "No police station can legally refuse to register your FIR",
-                  "Banks must give zero liability if fraud is reported within 3 days",
-                  "Digital arrest does not exist — hang up immediately",
-                  "Screenshots and WhatsApp chats are valid evidence in court",
-                  "You can report cybercrime anonymously via 1930 or cybercrime.gov.in",
-                  "First legal consultation is free via District Legal Aid",
-                ].map((right) => (
-                  <div key={right} className="flex items-start gap-3">
-                    <span className="mt-0.5 size-5 rounded-full bg-[#1a4a2e] flex items-center justify-center shrink-0">
-                      <svg width="10" height="10" viewBox="0 0 12 10" fill="none">
-                        <path d="M1 5l3.5 3.5L11 1" stroke="#bef264" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </span>
-                    <span className="text-sm font-medium text-[#1a4a2e]">{right}</span>
+                  { n: "01", title: "Spot it", body: "Real scams turned into warnings you'll actually read. We translate every FIR into a one-line red flag." },
+                  { n: "02", title: "Block it", body: "Know the red flags before the crook calls. A 60-second checklist for every common scam pattern." },
+                  { n: "03", title: "Fix it", body: "A Fellow walks you through the report. A verified advocate is one tap away. 24×7." },
+                ].map((s) => (
+                  <div key={s.n} className="flex md:flex-col items-start gap-4 rounded-2xl border border-border bg-background p-6">
+                    <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-lime font-mono text-sm font-bold text-lime-foreground">
+                      {s.n}
+                    </div>
+                    <div>
+                      <div className="font-display text-xl font-bold">{s.title}</div>
+                      <p className="mt-1 text-sm text-muted-foreground">{s.body}</p>
+                    </div>
                   </div>
                 ))}
               </div>
-              <button className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1a4a2e] px-5 py-2.5 text-sm font-bold text-lime">
-                Learn more about your rights →
-              </button>
+              <Link
+                to="/how-it-works"
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-ink-foreground"
+              >
+                Learn more →
+              </Link>
             </div>
-            {/* Globe watermark */}
-            <div className="absolute bottom-0 right-0 opacity-10 pointer-events-none">
-              <svg width="220" height="220" viewBox="0 0 24 24" fill="none" stroke="#1a4a2e" strokeWidth="0.5">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                <path d="M12 2v20" />
-                <path d="M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* How it works */}
-      <section
-        style={{
-          backgroundColor: "#f0f0f0ff",
-        }}
-      >
-        <div className="mx-auto max-w-6xl px-5 py-12">
-          <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">How it works</p>
-          <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
-            Three moves. One unbothered you.
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { n: "01", title: "Spot it", body: "Real scams turned into warnings you'll actually read. We translate every FIR into a one-line red flag." },
-              { n: "02", title: "Block it", body: "Know the red flags before the crook calls. A 60-second checklist for every common scam pattern." },
-              { n: "03", title: "Fix it", body: "A Fellow walks you through the report. A verified advocate is one tap away. 24×7." },
-            ].map((s) => (
-              <div key={s.n} className="flex md:flex-col items-start gap-4 rounded-2xl border border-border bg-background p-6">
-                <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-lime font-mono text-sm font-bold text-lime-foreground">
-                  {s.n}
-                </div>
-                <div>
-                  <div className="font-display text-xl font-bold">{s.title}</div>
-                  <p className="mt-1 text-sm text-muted-foreground">{s.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <Link
-            to="/how-it-works"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-ink-foreground"
-          >
-            Learn more →
-          </Link>
-        </div>
-      </section>
-      <SiteFooter />
-      <Chatbot />
-    </motion.div>
-    </div>
+          </section>
+          <SiteFooter />
+          <Chatbot />
+        </motion.div>
+      </div>
     </>
   );
 }

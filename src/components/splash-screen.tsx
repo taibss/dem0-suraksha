@@ -17,16 +17,6 @@ export function SplashScreen() {
 
   if (phase === "done") return null;
 
-  const containerStyle: React.CSSProperties = {
-    position: "fixed",
-    inset: 0,
-    zIndex: 9999,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "var(--background)",
-  };
-
   const exitActive = phase === "exit";
   const imgStyle: React.CSSProperties = exitActive
     ? {
@@ -37,7 +27,7 @@ export function SplashScreen() {
     : {};
 
   return (
-    <div style={containerStyle}>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background">
       <img
         src={logo}
         alt=""
