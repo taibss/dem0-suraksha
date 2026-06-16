@@ -25,10 +25,10 @@ const PULSE = [
 ];
 
 const DOOR_STYLES = [
-  { bg: "text-foreground border-2 border-border", style: { backgroundColor: "#15dbdbff" } },
-  { bg: "bg-lime text-lime-foreground", style: {} },
-  { bg: "bg-ink text-ink-foreground", style: {} },
-  { bg: "bg-card text-foreground border-2 border-border", style: {} },
+  { bg: "bg-[#15dbdb] text-foreground border-2 border-border" },
+  { bg: "bg-lime text-lime-foreground" },
+  { bg: "bg-ink text-ink-foreground" },
+  { bg: "bg-card text-foreground border-2 border-border" },
 ];
 
 const RIGHTS = [
@@ -399,8 +399,7 @@ function Chatbot() {
 
       {open && (
         <div
-          className="fixed bottom-24 right-6 z-50 w-80 rounded-2xl border-2 border-foreground bg-background shadow-[4px_4px_0_0_var(--foreground)] flex flex-col overflow-hidden"
-          style={{ height: "420px" }}
+          className="fixed bottom-24 right-6 z-50 w-80 h-[420px] rounded-2xl border-2 border-foreground bg-background shadow-[4px_4px_0_0_var(--foreground)] flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div className="flex items-center gap-2 px-4 py-3 border-b border-border shrink-0">
@@ -531,11 +530,7 @@ function Home() {
         </div>
       </section>
       {/* Four doors */}
-      <section
-        style={{
-          backgroundColor: "#f0f0f0ff",
-        }}
-      >
+      <section className="bg-[#f0f0f0]">
         <div className="mx-auto max-w-6xl px-5 py-8">
           <div className="mb-4">
             <p className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight tracking-tight uppercase">
@@ -550,7 +545,6 @@ function Home() {
                 key={d.id}
                 to="/help/$door"
                 params={{ door: d.id }}
-                style={DOOR_STYLES[i % 4].style}
                 className={`group relative rounded-2xl p-6 transition-transform hover:-translate-y-1 ${DOOR_STYLES[i % 4].bg}`}
               >
                 <div className="text-3xl">{d.emoji}</div>
@@ -565,11 +559,7 @@ function Home() {
         </div>
       </section>
       {/* Emergency Alert Card */}
-      <section
-        style={{
-          backgroundColor: "#f0f0f0ff",
-        }}
-      >
+      <section className="bg-[#f0f0f0]">
         <div className="mx-auto max-w-6xl px-5 py-4">
           <div className="rounded-2xl bg-[#B91C1C] px-5 py-4 shadow-[5px_5px_0_0_rgba(0,0,0,0.15)]">
             <div className="flex items-center gap-2 mb-2">
@@ -628,12 +618,7 @@ function Home() {
       </section>
 
       {/* My Rights */}
-      <section
-        id="rights"
-        style={{
-          backgroundColor: "#f0f0f0ff",
-        }}
-      >
+      <section id="rights" className="bg-[#f0f0f0]">
         <div className="mx-auto max-w-6xl px-5 py-12">
           <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Know your rights</p>
           <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
@@ -695,11 +680,7 @@ function Home() {
         </div>
       </section>
       {/* How it works */}
-      <section
-        style={{
-          backgroundColor: "#f0f0f0ff",
-        }}
-      >
+      <section className="bg-[#f0f0f0]">
         <div className="mx-auto max-w-6xl px-5 py-12">
           <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">How it works</p>
           <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
