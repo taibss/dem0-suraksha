@@ -80,7 +80,7 @@ function AdvocatePage() {
   }
 
   function isFormValid() {
-    return name.trim() && phone.trim() && issueType && description.trim() && callbackTime;
+    return name.trim() && phone.length === 10 && issueType && description.trim() && callbackTime;
   }
 
   return (
@@ -137,7 +137,7 @@ function AdvocatePage() {
                   <input
                     type="text"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value.replace(/[0-9]/g, ""))}
                     placeholder="Enter your full name"
                     className="mt-1 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-foreground"
                     required
@@ -149,11 +149,14 @@ function AdvocatePage() {
                   <input
                     type="tel"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+91 98765 43210"
-                    className="mt-1 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-foreground"
+                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                    placeholder="9876543210"
+                    className={"mt-1 w-full rounded-xl border bg-background px-3 py-2.5 text-sm outline-none " + (phone && phone.length !== 10 ? "border-red-500" : "border-border focus:border-foreground")}
                     required
                   />
+                  {phone && phone.length !== 10 && (
+                    <p className="mt-1 text-xs text-red-500">Enter a valid 10-digit number</p>
+                  )}
                 </div>
 
                 <div>
