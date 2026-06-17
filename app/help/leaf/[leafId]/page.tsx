@@ -590,14 +590,15 @@ export default function LeafPage() {
 
 function AdvocateFloatingCard({ leafId }: { leafId: string }) {
   const [showBrief, setShowBrief] = useState(false);
+  const leafTitle = TREE.leaves[leafId]?.title || "";
 
   if (!showBrief) {
     return (
       <button
         onClick={() => setShowBrief(true)}
-        className="fixed bottom-6 right-6 z-50 rounded-full border-2 border-foreground bg-foreground px-6 py-4 text-base font-bold text-background shadow-[5px_5px_0_0_#ffb703] transition-transform hover:-translate-y-0.5 bg-gradient-to-b from-white/15 to-transparent"
+        className="fixed bottom-6 right-6 z-50 rounded-full border-2 border-[#bef264] bg-[#bef264] px-6 py-4 text-base font-bold text-foreground shadow-[5px_5px_0_0_var(--foreground)] transition-transform hover:-translate-y-0.5"
       >
-        ⚖ Talk to an Advocate
+        <span className="text-2xl mr-2">⚖</span> Talk to an Advocate
       </button>
     );
   }
@@ -610,7 +611,7 @@ function AdvocateFloatingCard({ leafId }: { leafId: string }) {
       </p>
       <div className="mt-3 flex gap-2">
         <Link
-          href="/advocate"
+          href={"/advocate?issue=" + encodeURIComponent(leafId) + "&desc=" + encodeURIComponent(leafTitle)}
           className="flex-1 rounded-full bg-lime px-4 py-2 text-center text-xs font-bold text-ink"
         >
           Connect →
