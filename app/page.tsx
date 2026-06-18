@@ -395,7 +395,7 @@ function Chatbot() {
         <button
           onClick={() => setOpen((v) => !v)}
           className="flex size-20 items-center justify-center rounded-full shadow-xl transition-transform hover:scale-105"
-          style={!open ? { animation: "owlBounce 2s ease-in-out infinite" } : undefined}
+          style={!open ? { animation: "owlBounce 2s ease-in-out infinite, owlGlow 2s ease-in-out infinite" } : undefined}
           aria-label="Ask Nyay"
         >
           {open ? (
