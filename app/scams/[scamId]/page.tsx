@@ -149,16 +149,17 @@ const SCAM_INFO: Record<string, {
   },
 };
 
-export function generateMetadata({ params }: { params: { scamId: string } }): Metadata {
-  const info = SCAM_INFO[params.scamId];
-  const leaf = TREE.leaves[params.scamId];
+export async function generateMetadata({ params }: { params: Promise<{ scamId: string }> }): Promise<Metadata> {
+  const { scamId } = await params;
+  const info = SCAM_INFO[scamId];
+  const leaf = TREE.leaves[scamId];
   return {
     title: `${leaf?.title ?? "Scam"} — Suraksha Radar`,
   };
 }
 
-export default function ScamDetail({ params }: { params: { scamId: string } }) {
-  const { scamId } = params;
+export default async function ScamDetail({ params }: { params: Promise<{ scamId: string }> }) {
+  const { scamId } = await params;
   const info = SCAM_INFO[scamId];
   const leaf = TREE.leaves[scamId];
   if (!info || !leaf) notFound();

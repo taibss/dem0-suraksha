@@ -32,36 +32,36 @@ const RIGHTS = [
     tag: "FIR",
     stat: "0",
     statLabel: "valid reasons to refuse",
-    title: "No police station can refuse your complaint",
-    body: "Under Section 154 CrPC, any police station must register your FIR. If they refuse, you can send it by post to the SP, file online on the state portal, or approach a Magistrate directly. Refusal is itself an offence.",
+    title: "Police can't refuse your complaint",
+    body: "No police station can legally turn you away. If they do, you can file online, send it by post to the SP, or go directly to a Magistrate. Refusing an FIR is an offence.",
   },
   {
     tag: "MONEY",
     stat: "3",
-    statLabel: "working days to get zero liability",
-    title: "Banks must cap your liability if you report fast",
-    body: "RBI's customer-protection rules give you zero liability for unauthorised electronic transactions caused by bank negligence or third-party fraud — if you report within 3 working days. Even up to 7 days, your liability is capped.",
+    statLabel: "working days for zero liability",
+    title: "Report fraud in 3 days, pay nothing",
+    body: "If you report unauthorised transactions within 3 working days, your liability is zero. Even up to 7 days, the bank can't hold you responsible for the full amount.",
   },
   {
     tag: "ARREST",
     stat: "∞",
     statLabel: "fake — digital arrest doesn't exist",
-    title: "There is no such thing as a 'digital arrest'",
-    body: "No law in India permits 'digital arrest'. Police, CBI, ED, or Narcotics cannot arrest you over a video call. If someone claims this, hang up immediately — it is always a scam.",
+    title: "Digital arrest is a scam. Always.",
+    body: "No government agency — police, CBI, ED, anyone — can arrest you over a video call. If someone says they can, hang up. It's always fraud.",
   },
   {
     tag: "EVIDENCE",
     stat: "100%",
     statLabel: "valid in Indian courts",
-    title: "Screenshots and chats are valid legal evidence",
-    body: "Under the IT Act and Indian Evidence Act, electronic records including WhatsApp chats, emails, screenshots, and call recordings are admissible as evidence in court.",
+    title: "Screenshots and chats are evidence",
+    body: "WhatsApp messages, screenshots, emails, and call recordings all count as evidence in court. Don't delete anything — save it.",
   },
   {
     tag: "CYBER",
     stat: "1930",
     statLabel: "national helpline, free 24/7",
-    title: "You can report cybercrime anonymously",
-    body: "cybercrime.gov.in allows you to report crimes without disclosing your identity. You can also call 1930, the national cyber financial fraud helpline, anytime.",
+    title: "Report cybercrime without revealing your name",
+    body: "Call 1930 or visit cybercrime.gov.in to report fraud anonymously. Available 24/7, free of cost.",
   },
 ];
 
@@ -539,7 +539,7 @@ export default function Home() {
 
         {/* Hero */}
         <section className="bg-primary text-primary-foreground">
-          <div className="mx-auto max-w-6xl px-5 py-12 md:py-20">
+            <div className="mx-auto max-w-6xl px-5 py-6 md:py-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -554,8 +554,9 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 1.5 }}
             >
-              <h1 className="mt-4 font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[0.95] tracking-tight">
-                Got scammed?
+              <h1 className="mt-4 font-display text-[clamp(3rem,8vw,6rem)] font-extrabold leading-[0.95] tracking-tight">
+                Got scammed?<br></br>
+                Start here.
               </h1>
             </motion.div>
             <motion.div
@@ -563,17 +564,15 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 1.62 }}
             >
-              <h1 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[0.95] tracking-tight">
-                We fix that.
-              </h1>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 1.72 }}
             >
-              <p className="mt-4 max-w-md text-base text-primary-foreground/85">
-                Lawyer on call. Complaint drafted. No cap, no wait.
+
+              <p className="mt-4 max-w-md text-lg font-semibold text-primary-foreground">
+                Report it, get help, and talk to a lawyer. All in one place.
               </p>
             </motion.div>
             <motion.div
@@ -602,20 +601,20 @@ export default function Home() {
               </p>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="mt-1 text-sm text-muted-foreground">give us the lore</p>
+              <p className="mt-1 text-sm text-muted-foreground">You don't need to know the legal term. Just pick.</p>
             </FadeUp>
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:grid-rows-2 auto-rows-fr">
               {TREE.doors.map((d, i) => (
-                <FadeUp key={d.id} delay={0.1 + i * 0.1}>
+                <FadeUp key={d.id} delay={0.1 + i * 0.1} className="h-full">
                   <Link
                     href={"/help/" + d.id}
                     style={DOOR_STYLES[i % 4].style}
-                    className={`group relative block rounded-2xl p-6 ${i % 4 === 2 ? "shadow-[5px_5px_0_0_white]" : "shadow-[5px_5px_0_0_var(--foreground)]"} transition-transform duration-300 hover:-translate-y-2 ${DOOR_STYLES[i % 4].bg}`}
+                    className={`group relative flex flex-col h-full rounded-2xl p-6 ${i % 4 === 2 ? "shadow-[5px_5px_0_0_white]" : "shadow-[5px_5px_0_0_var(--foreground)]"} transition-transform duration-300 hover:-translate-y-2 ${DOOR_STYLES[i % 4].bg}`}
                   >
                     <div className="text-3xl">{d.emoji}</div>
                     <div className="mt-3 font-display text-xl font-extrabold">{d.title}</div>
                     <p className="mt-1 text-sm opacity-75">{d.subtitle}</p>
-                    <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold">
+                    <div className="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-semibold">
                       Get help <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                     </div>
                   </Link>
@@ -637,17 +636,17 @@ export default function Home() {
                   </span>
                 </div>
                 <h2 className="font-display text-xl font-extrabold text-white leading-tight">
-                  Scammed in the last 24 hours?
+                  Just got scammed?
                 </h2>
                 <p className="mt-1 text-sm text-white/85 max-w-lg">
-                  Call <span className="font-bold text-[#FFD6D6]">1930</span> immediately —
-                  banks can still freeze funds if you act fast.
+                  Call <span className="font-bold text-[#FFD6D6]">1930</span> right now —
+                  banks can freeze the money if you act within 24 hours.
                 </p>
                 <div className="mt-3 grid grid-cols-3 gap-3 border-t border-white/20 pt-3 mb-3">
                   {[
-                    ["24 hrs", "golden window"],
+                    ["24 hrs", "to act fast"],
                     ["₹3.1Cr", "frozen this week"],
-                    ["12k+", "citizens helped"],
+                    ["12k+", "people helped"],
                   ].map(([stat, label], idx) => (
                     <FadeUp key={label} delay={0.1 + idx * 0.1}>
                       <div>
@@ -684,12 +683,12 @@ export default function Home() {
 
         {/* Know Your Rights */}
         <section id="rights" style={{ backgroundColor: "#f0f0f0ff" }}>
-          <div className="mx-auto max-w-6xl px-5 py-12">
+          <div className="mx-auto max-w-6xl px-5 py-6">
             <FadeUp delay={0}>
               <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Know your rights</p>
             </FadeUp>
             <FadeUp delay={0.12}>
-              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
+              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-4">
                 Things every Indian should know.
               </h2>
             </FadeUp>
@@ -717,17 +716,17 @@ export default function Home() {
                     </svg>
                     <div>
                       <p className="font-display text-xl font-extrabold text-[#1a4a2e] leading-tight">Know Your Rights.</p>
-                      <p className="text-sm font-semibold text-[#1a4a2e]/70">Globally protected. Locally enforced.</p>
+                      <p className="text-sm font-semibold text-[#1a4a2e]/70">What the law says — in plain English.</p>
                     </div>
                   </div>
                   <div className="mt-5 space-y-3">
                     {[
-                      "No police station can legally refuse to register your FIR",
-                      "Banks must give zero liability if fraud is reported within 3 days",
-                      "Digital arrest does not exist — hang up immediately",
-                      "Screenshots and WhatsApp chats are valid evidence in court",
-                      "You can report cybercrime anonymously via 1930 or cybercrime.gov.in",
-                      "First legal consultation is free via District Legal Aid",
+                      "Police must register your FIR — refusal is illegal",
+                      "Report bank fraud within 3 days for zero liability",
+                      "Digital arrest is a scam — hang up immediately",
+                      "Screenshots and chats count as evidence in court",
+                      "Call 1930 or visit cybercrime.gov.in to report anonymously",
+                      "Free legal help is available through District Legal Aid",
                     ].map((right, idx) => (
                       <FadeUp key={right} delay={0.2 + idx * 0.07}>
                         <div className="flex items-start gap-3">
@@ -759,21 +758,21 @@ export default function Home() {
         </section>
 
         {/* How it works */}
-        <section className="bg-[#f0f0f0]">
-          <div className="mx-auto max-w-6xl px-5 py-12">
+        <section style={{ backgroundColor: "#f0f0f0ff" }}>
+          <div className="mx-auto max-w-6xl px-5 py-6">
             <FadeUp delay={0}>
               <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">How it works</p>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
-                Three moves. One unbothered you.
+              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-4">
+                Spot it. Stop it. Report it.
               </h2>
             </FadeUp>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { n: "01", title: "Spot it", body: "Real scams turned into warnings you'll actually read. We translate every FIR into a one-line red flag." },
-                { n: "02", title: "Block it", body: "Know the red flags before the crook calls. A 60-second checklist for every common scam pattern." },
-                { n: "03", title: "Fix it", body: "A Fellow walks you through the report. A verified advocate is one tap away. 24×7." },
+                { n: "01", title: "Spot it", body: "Tell us what happened — takes 2 minutes. We match your situation to the exact scam type." },
+                { n: "02", title: "Stop it", body: "Get your action plan instantly. Know exactly what to do, what not to do, and who to call." },
+                { n: "03", title: "Report it", body: "File your complaint step by step. Talk to a verified advocate anytime — free first consultation." },
               ].map((s, idx) => (
                 <FadeUp key={s.n} delay={0.1 + idx * 0.12}>
                   <div className="flex md:flex-col items-start gap-4 rounded-2xl border border-border bg-background p-6">
@@ -788,14 +787,55 @@ export default function Home() {
                 </FadeUp>
               ))}
             </div>
-            <FadeUp delay={0.42}>
-              <Link
-                href="/how-it-works"
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-ink-foreground"
-              >
-                Learn more →
-              </Link>
+            <FadeUp delay={0.5}>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Link
+                  href="/how-it-works"
+                  className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-ink-foreground"
+                >
+                  Learn more →
+                </Link>
+                <Link
+                  href="/advocate"
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-[#B91C1C] bg-[#B91C1C] px-5 py-2.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5"
+                >
+                  🚨 Talk to a lawyer now
+                </Link>
+              </div>
             </FadeUp>
+          </div>
+        </section>
+
+        {/* What Happens After I Report */}
+        <section style={{ backgroundColor: "#f0f0f0ff" }}>
+          <div className="mx-auto max-w-6xl px-5 py-6">
+            <FadeUp delay={0}>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">What happens next</p>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-4">
+                Here's exactly what happens after you report.
+              </h2>
+            </FadeUp>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {[
+                { step: "1", label: "Day 0", title: "You report", body: "Tell us what happened via the chatbot or help flow. Takes 2 minutes." },
+                { step: "2", label: "Hour 1", title: "We guide you", body: "You get an instant action plan — what to do, who to call, what evidence to save." },
+                { step: "3", label: "24 hours", title: "Lawyer reviews", body: "A verified advocate reviews your case and calls you back if needed." },
+                { step: "4", label: "72 hours", title: "Bank or police acts", body: "Funds can be frozen. FIR gets filed. The system starts moving." },
+              ].map((s, idx) => (
+                <FadeUp key={s.step} delay={0.1 + idx * 0.1}>
+                  <div className="rounded-2xl border border-border bg-background p-6">
+                    <div className="flex items-center justify-center size-8 rounded-full bg-primary text-white text-xs font-bold">
+                      {s.step}
+                    </div>
+                    <p className="mt-3 text-xs font-mono text-muted-foreground">{s.label}</p>
+                    <p className="mt-1 font-display font-bold text-base">{s.title}</p>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
           </div>
         </section>
 
