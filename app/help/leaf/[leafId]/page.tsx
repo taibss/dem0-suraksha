@@ -5,7 +5,7 @@ import { useParams, notFound } from "next/navigation";
 import { TREE } from "@/lib/tree";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { ChevronLeft, Home as HomeIcon, AlertTriangle, Shield, FileText, Scale, Phone, Upload, Copy, Check, ExternalLink } from "lucide-react";
+import { ChevronLeft, Home as HomeIcon, AlertTriangle, Shield, Scale, Phone, Upload, Copy, Check, ExternalLink } from "lucide-react";
 import { useRef, useState } from "react";
 
 function portalUrl(leafId: string): string {
@@ -345,8 +345,8 @@ export default function LeafPage() {
               <p className="mt-2 text-lg text-foreground/90">{leaf.explanation}</p>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
-              <PlanCard icon={<AlertTriangle className="size-5" />} eyebrow="Do this now" tint="lime">
+            <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 items-stretch">
+              <PlanCard icon={<AlertTriangle className="size-5" />} eyebrow="Do this now" tint="lime" className="h-full flex flex-col">
                 <ol className="space-y-2.5">
                   {leaf.actions.map((a, i) => (
                     <ActionItem key={i} text={a} index={i} badge="lime" />
@@ -354,31 +354,41 @@ export default function LeafPage() {
                 </ol>
               </PlanCard>
 
-              <PlanCard icon={<Scale className="size-5" />} eyebrow="Authorities & routes" tint="primary">
-                <ol className="space-y-2.5">
-                  {leaf.authorities.map((a, i) => (
-                    <ActionItem key={i} text={a} index={i} badge="red" />
-                  ))}
-                </ol>
+              <PlanCard icon={<Scale className="size-5" />} eyebrow="Authorities & routes" tint="primary" className="h-full flex flex-col">
+                <ul className="space-y-2 text-sm list-disc pl-4">
+                  <li>
+                    <a
+                      href="https://cybercrime.gov.in"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-primary hover:underline"
+                    >
+                      cybercrime.gov.in
+                    </a>
+                  </li>
+                  <li className="text-foreground/80">Bank fraud desk</li>
+                  <li className="text-foreground/80">Nearest Cyber Police</li>
+                  <li className="text-foreground/80">SP/DCP escalation</li>
+                </ul>
               </PlanCard>
 
-              <PlanCard icon={<Shield className="size-5" />} eyebrow="Evidence checklist" tint="ink">
+              <PlanCard icon={<Shield className="size-5" />} eyebrow="Evidence checklist" tint="ink" className="h-full flex flex-col">
                 <EvidenceChecklist items={leaf.evidence} onFilesChange={setEvidenceCount} />
               </PlanCard>
 
-              <PlanCard icon={<FileText className="size-5" />} eyebrow="Drafts we can prep" tint="card">
-                <ul className="space-y-2 text-sm">
-                  {leaf.drafts.map((d, i) => (
-                    <li key={i} className="flex gap-2">
-                      <span className="text-primary">✎</span> {d}
+              <PlanCard icon={<Shield className="size-5" />} eyebrow="Your legal shield" tint="card" className="h-full flex flex-col">
+                <ul className="space-y-3 text-sm list-disc pl-4">
+                  {(leaf.laws ?? [
+                    { section: "Section 66C IT Act", title: "Identity theft", description: "3 years imprisonment." },
+                    { section: "Section 154 CrPC", title: "FIR cannot be refused", description: "Refusal is illegal." },
+                  ]).map((law, i) => (
+                    <li key={i}>
+                      <span className="text-xs font-bold uppercase tracking-widest text-primary">{law.section}</span>
+                      <span className="font-semibold mt-0.5 block">{law.title}</span>
+                      <span className="text-xs text-muted-foreground mt-0.5 block">{law.description}</span>
                     </li>
                   ))}
                 </ul>
-                {leaf.lawyer && (
-                  <p className="mt-4 text-sm text-muted-foreground">
-                    <b className="text-foreground">Lawyer:</b> {leaf.lawyer}
-                  </p>
-                )}
               </PlanCard>
             </div>
 
@@ -632,11 +642,13 @@ function PlanCard({
   eyebrow,
   icon,
   tint,
+  className,
 }: {
   children: React.ReactNode;
   eyebrow: string;
   icon: React.ReactNode;
   tint: "lime" | "ink" | "primary" | "card";
+  className?: string;
 }) {
   const tints = {
     lime: "bg-card border-foreground",
@@ -645,12 +657,12 @@ function PlanCard({
     card: "bg-card border-foreground",
   } as const;
   return (
-    <div className={`rounded-2xl border-2 ${tints[tint]} p-5 shadow-[4px_4px_0_0_var(--foreground)]`}>
+    <div className={`rounded-2xl border-2 ${tints[tint]} p-5 shadow-[4px_4px_0_0_var(--foreground)] ${className ?? ""}`}>
       <div className="flex items-center gap-2 text-foreground/70">
         {icon}
         <span className="eyebrow">{eyebrow}</span>
       </div>
-      <div className="mt-3">{children}</div>
+      <div className="mt-3 flex-1">{children}</div>
     </div>
   );
 }

@@ -16,6 +16,7 @@ export function SiteFooter() {
             <Link href="/help" className="hover:underline">Get help</Link>
             <Link href="/scams" className="hover:underline">Scam radar</Link>
             <Link href="/how-it-works" className="hover:underline">How it works</Link>
+            <Link href="/blog" className="hover:underline">Blog</Link>
           </div>
           <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground mt-4">
             <span>⚖️ Built with verified advocates</span>

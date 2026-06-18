@@ -1,5 +1,11 @@
 import data from "@/data.json";
 
+export type Law = {
+  section: string;
+  title: string;
+  description: string;
+};
+
 export type LeafData = {
   title: string;
   urgency: string;
@@ -9,6 +15,7 @@ export type LeafData = {
   authorities: string[];
   drafts: string[];
   lawyer: string;
+  laws?: Law[];
 };
 
 export type TreeOption = {

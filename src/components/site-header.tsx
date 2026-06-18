@@ -35,6 +35,9 @@ export function SiteHeader() {
           <Link href="/how-it-works" className="text-sm font-semibold transition-colors hover:text-primary">
             How it works
           </Link>
+          <Link href="/blog" className="text-sm font-semibold transition-colors hover:text-primary">
+            Blog
+          </Link>
           <Link
             href="/#rights"
             className="text-sm font-semibold transition-colors hover:text-primary"
@@ -116,6 +119,9 @@ export function SiteHeader() {
             </Link>
             <Link href="/how-it-works" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted">
               How it works
+            </Link>
+            <Link href="/blog" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted">
+              Blog
             </Link>
             <Link
               href="/#rights"

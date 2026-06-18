@@ -1372,7 +1372,24 @@
         "Police complaint",
         "Bank freeze request"
       ],
-      "lawyer": "Urgent"
+      "lawyer": "Urgent",
+      "laws": [
+        {
+          "section": "Section 66D IPC",
+          "title": "Cheating by impersonation",
+          "description": "Fake police/CBI calls. Up to 3 years imprisonment."
+        },
+        {
+          "section": "Section 43 IT Act",
+          "title": "Unauthorised access compensation",
+          "description": "You are entitled to full compensation for funds lost."
+        },
+        {
+          "section": "Section 154 CrPC",
+          "title": "FIR cannot be refused",
+          "description": "Police must register your complaint. Refusal is illegal."
+        }
+      ]
     },
     "fake_parcel_threat": {
       "title": "Fake parcel crime threat",

@@ -6,11 +6,12 @@ import { useEffect, useState, useRef } from "react";
 import { TREE } from "@/lib/tree";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { ArrowRight, Phone, ChevronDown, ChevronUp, X } from "lucide-react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { ArrowRight, Phone, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { FadeUp } from "@/components/fade-up";
 import splashLogo from "@/assets/lawgichub-logo.png";
 import nyayOwl from "@/assets/suraksha-owl.png";
+import { BLOG_POSTS } from "@/data/blog";
 
 const PULSE = [
   "Senior dodges ₹14L digital arrest call",
@@ -27,154 +28,11 @@ const DOOR_STYLES = [
   { bg: "bg-card text-foreground border-2 border-border", style: {} },
 ];
 
-const RIGHTS = [
-  {
-    tag: "FIR",
-    stat: "0",
-    statLabel: "valid reasons to refuse",
-    title: "Police can't refuse your complaint",
-    body: "No police station can legally turn you away. If they do, you can file online, send it by post to the SP, or go directly to a Magistrate. Refusing an FIR is an offence.",
-  },
-  {
-    tag: "MONEY",
-    stat: "3",
-    statLabel: "working days for zero liability",
-    title: "Report fraud in 3 days, pay nothing",
-    body: "If you report unauthorised transactions within 3 working days, your liability is zero. Even up to 7 days, the bank can't hold you responsible for the full amount.",
-  },
-  {
-    tag: "ARREST",
-    stat: "∞",
-    statLabel: "fake — digital arrest doesn't exist",
-    title: "Digital arrest is a scam. Always.",
-    body: "No government agency — police, CBI, ED, anyone — can arrest you over a video call. If someone says they can, hang up. It's always fraud.",
-  },
-  {
-    tag: "EVIDENCE",
-    stat: "100%",
-    statLabel: "valid in Indian courts",
-    title: "Screenshots and chats are evidence",
-    body: "WhatsApp messages, screenshots, emails, and call recordings all count as evidence in court. Don't delete anything — save it.",
-  },
-  {
-    tag: "CYBER",
-    stat: "1930",
-    statLabel: "national helpline, free 24/7",
-    title: "Report cybercrime without revealing your name",
-    body: "Call 1930 or visit cybercrime.gov.in to report fraud anonymously. Available 24/7, free of cost.",
-  },
-];
-
 const BOT_OPTIONS = [
   { label: "I've been scammed", to: "/help" },
   { label: "Today's scams", to: "/scams" },
   { label: "My rights", to: "/#rights" },
 ];
-
-function RightsSection() {
-  const [open, setOpen] = useState<number | null>(null);
-  return (
-    <div className="divide-y divide-border">
-      {RIGHTS.map((r, i) => (
-        <div key={i}>
-          <button
-            onClick={() => setOpen(open === i ? null : i)}
-            className="flex w-full items-start justify-between gap-4 py-5 text-left"
-          >
-            <div className="flex items-start gap-5">
-              <div className="shrink-0 w-20">
-                <p className="text-2xl font-extrabold font-display text-foreground leading-none">{r.stat}</p>
-                <p className="text-[10px] text-muted-foreground leading-tight mt-0.5">{r.statLabel}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">{r.tag}</p>
-                <p className="font-display text-base font-bold text-foreground leading-snug">{r.title}</p>
-              </div>
-            </div>
-            <div className={`shrink-0 size-7 rounded-full border border-border flex items-center justify-center transition-colors mt-0.5 ${open === i ? "bg-foreground" : ""}`}>
-              {open === i
-                ? <ChevronUp className="size-3.5 text-background" />
-                : <ChevronDown className="size-3.5 text-muted-foreground" />}
-            </div>
-          </button>
-          {open === i && (
-            <p className="pb-5 text-sm leading-relaxed text-muted-foreground pl-[104px]">{r.body}</p>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function RightsSectionOrange() {
-  const [open, setOpen] = useState<number | null>(null);
-  return (
-    <div className="divide-y divide-[#1a4a2e]/30">
-      {RIGHTS.map((r, i) => (
-        <div key={i}>
-          <button
-            onClick={() => setOpen(open === i ? null : i)}
-            className="flex w-full items-start justify-between gap-4 py-5 text-left"
-          >
-            <div className="flex items-start gap-5">
-              <div className="shrink-0 w-20">
-                <p className="text-2xl font-extrabold font-display text-[#1a4a2e] leading-none">{r.stat}</p>
-                <p className="text-[10px] text-[#f5f0e8]/70 leading-tight mt-0.5">{r.statLabel}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#1a4a2e] mb-1">{r.tag}</p>
-                <p className="font-display text-base font-bold text-[#f5f0e8] leading-snug">{r.title}</p>
-              </div>
-            </div>
-            <div className={`shrink-0 size-7 rounded-full border border-[#1a4a2e]/40 flex items-center justify-center transition-colors mt-0.5 ${open === i ? "bg-[#1a4a2e] border-[#1a4a2e]" : ""}`}>
-              {open === i
-                ? <ChevronUp className="size-3.5 text-[#f5f0e8]" />
-                : <ChevronDown className="size-3.5 text-[#1a4a2e]" />}
-            </div>
-          </button>
-          {open === i && (
-            <p className="pb-5 text-sm leading-relaxed text-[#f5f0e8]/80 pl-[104px]">{r.body}</p>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function RightsSectionDark() {
-  const [open, setOpen] = useState<number | null>(null);
-  return (
-    <div className="divide-y divide-white/10">
-      {RIGHTS.map((r, i) => (
-        <div key={i}>
-          <button
-            onClick={() => setOpen(open === i ? null : i)}
-            className="flex w-full items-start justify-between gap-4 py-5 text-left"
-          >
-            <div className="flex items-start gap-5">
-              <div className="shrink-0 w-20">
-                <p className="text-2xl font-extrabold font-display text-lime leading-none">{r.stat}</p>
-                <p className="text-[10px] text-white/40 leading-tight mt-0.5">{r.statLabel}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-lime/70 mb-1">{r.tag}</p>
-                <p className="font-display text-base font-bold text-white leading-snug">{r.title}</p>
-              </div>
-            </div>
-            <div className={`shrink-0 size-7 rounded-full border border-white/20 flex items-center justify-center transition-colors mt-0.5 ${open === i ? "bg-lime border-lime" : ""}`}>
-              {open === i
-                ? <ChevronUp className="size-3.5 text-lime-foreground" />
-                : <ChevronDown className="size-3.5 text-white/40" />}
-            </div>
-          </button>
-          {open === i && (
-            <p className="pb-5 text-sm leading-relaxed text-white/60 pl-[104px]">{r.body}</p>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
 
 function MessageText({ text }: { text: string }) {
   const router = useRouter();
@@ -492,9 +350,6 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  const rightsRef = useRef(null);
-  const rightsInView = useInView(rightsRef, { once: true, margin: "-80px" });
-
   return (
     <>
       <AnimatePresence>
@@ -681,6 +536,55 @@ export default function Home() {
           </section>
         </FadeUp>
 
+        {/* How it works */}
+        <section style={{ backgroundColor: "#f0f0f0ff" }}>
+          <div className="mx-auto max-w-6xl px-5 py-6">
+            <FadeUp delay={0}>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">How it works</p>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-4">
+                Spot it. Stop it. Report it.
+              </h2>
+            </FadeUp>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { n: "01", title: "Spot it", body: "Tell us what happened — takes 2 minutes. We match your situation to the exact scam type." },
+                { n: "02", title: "Stop it", body: "Get your action plan instantly. Know exactly what to do, what not to do, and who to call." },
+                { n: "03", title: "Report it", body: "File your complaint step by step. Talk to a verified advocate anytime — free first consultation." },
+              ].map((s, idx) => (
+                <FadeUp key={s.n} delay={0.1 + idx * 0.12}>
+                  <div className="flex md:flex-col items-start gap-4 rounded-2xl border border-border bg-background p-6">
+                    <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-lime font-mono text-sm font-bold text-lime-foreground">
+                      {s.n}
+                    </div>
+                    <div>
+                      <div className="font-display text-xl font-bold">{s.title}</div>
+                      <p className="mt-1 text-sm text-muted-foreground">{s.body}</p>
+                    </div>
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
+            <FadeUp delay={0.5}>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Link
+                  href="/how-it-works"
+                  className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-ink-foreground"
+                >
+                  Learn more →
+                </Link>
+                <Link
+                  href="/advocate"
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-[#B91C1C] bg-[#B91C1C] px-5 py-2.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5"
+                >
+                  🚨 Talk to a lawyer now
+                </Link>
+              </div>
+            </FadeUp>
+          </div>
+        </section>
+
         {/* Know Your Rights */}
         <section id="rights" style={{ backgroundColor: "#f0f0f0ff" }}>
           <div className="mx-auto max-w-6xl px-5 py-6">
@@ -693,13 +597,9 @@ export default function Home() {
               </h2>
             </FadeUp>
             <motion.div
-              ref={rightsRef}
-              style={{ position: "relative", willChange: "transform, opacity" }}
               initial={{ opacity: 0, y: 50, scale: 0.97 }}
-              animate={rightsInView
-                ? { opacity: 1, y: 0, scale: 1 }
-                : { opacity: 0, y: 50, scale: 0.97 }
-              }
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             >
               <div className="relative overflow-hidden rounded-2xl bg-lime flex flex-col md:flex-row">
@@ -754,55 +654,6 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-          </div>
-        </section>
-
-        {/* How it works */}
-        <section style={{ backgroundColor: "#f0f0f0ff" }}>
-          <div className="mx-auto max-w-6xl px-5 py-6">
-            <FadeUp delay={0}>
-              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">How it works</p>
-            </FadeUp>
-            <FadeUp delay={0.1}>
-              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-4">
-                Spot it. Stop it. Report it.
-              </h2>
-            </FadeUp>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[
-                { n: "01", title: "Spot it", body: "Tell us what happened — takes 2 minutes. We match your situation to the exact scam type." },
-                { n: "02", title: "Stop it", body: "Get your action plan instantly. Know exactly what to do, what not to do, and who to call." },
-                { n: "03", title: "Report it", body: "File your complaint step by step. Talk to a verified advocate anytime — free first consultation." },
-              ].map((s, idx) => (
-                <FadeUp key={s.n} delay={0.1 + idx * 0.12}>
-                  <div className="flex md:flex-col items-start gap-4 rounded-2xl border border-border bg-background p-6">
-                    <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-lime font-mono text-sm font-bold text-lime-foreground">
-                      {s.n}
-                    </div>
-                    <div>
-                      <div className="font-display text-xl font-bold">{s.title}</div>
-                      <p className="mt-1 text-sm text-muted-foreground">{s.body}</p>
-                    </div>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-            <FadeUp delay={0.5}>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <Link
-                  href="/how-it-works"
-                  className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-ink-foreground"
-                >
-                  Learn more →
-                </Link>
-                <Link
-                  href="/advocate"
-                  className="inline-flex items-center gap-2 rounded-full border-2 border-[#B91C1C] bg-[#B91C1C] px-5 py-2.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5"
-                >
-                  🚨 Talk to a lawyer now
-                </Link>
-              </div>
-            </FadeUp>
           </div>
         </section>
 
