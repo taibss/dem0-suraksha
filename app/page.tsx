@@ -36,7 +36,7 @@ const BOT_OPTIONS = [
 
 function MessageText({ text }: { text: string }) {
   const router = useRouter();
-  const linkRegex = /\/(help|scams|how-it-works)(?:\/\S*)?/g;
+  const linkRegex = /\/(help|scams|how-it-works|rights|blog|advocate)(?:\/\S*)?/g;
   const parts: (string | { path: string })[] = [];
   let last = 0;
   let match: RegExpExecArray | null;
@@ -68,17 +68,31 @@ function MessageText({ text }: { text: string }) {
 function Chatbot() {
   const [open, setOpen] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      role: "model",
-      parts: [{ text: "Hey! I'm Nyay, Suraksha's legal guide. Got scammed or need help? Tell me what happened." }],
-    },
-  ]);
+  const [messages, setMessages] = useState<Array<{ role: string; parts: Array<{ text: string }> }>>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = sessionStorage.getItem("nyay-chat");
+        if (saved) return JSON.parse(saved);
+      } catch {}
+    }
+    return [
+      {
+        role: "model",
+        parts: [{ text: "Hey! I'm Nyay, Suraksha's legal guide. I'm sorry you're going through this — whatever happened, you're not alone. Tell me what happened and I'll help you figure out the next steps. Suraksha is here for you." }],
+      },
+    ];
+  });
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem("nyay-chat", JSON.stringify(messages));
+    } catch {}
+  }, [messages]);
 
   useEffect(() => {
     if (!open) {
@@ -172,6 +186,10 @@ function Chatbot() {
     }
 
     const doorKeywords: [string[], string][] = [
+      [["today's scams", "today scams", "show me scams", "what are today scams", "scam list", "scam radar"], "/scams"],
+      [["lawyer", "advocate", "talk to lawyer", "legal help", "legal advice"], "/advocate"],
+      [["blog", "read blog", "articles", "guides"], "/blog"],
+      [["rights", "my rights", "know your rights", "legal rights"], "/rights"],
       [["threat", "blackmail", "extortion", "scared", "afraid"], "/help/threats"],
       [["money", "upi", "investment", "job", "loan", "bank", "shopping", "fraud", "paid", "transfer", "scam", "lost", "gift", "task", "commission", "stock", "crypto", "trading"], "/help/money"],
       [["police", "fir", "complaint", "station", "report", "cyber cafe", "cyber crime"], "/help/process"],
@@ -203,6 +221,25 @@ function Chatbot() {
 
     const redirectPath = redirectFromInput(input);
 
+    if (redirectPath) {
+      const isDistress = ["/help", "/help/money", "/help/threats", "/help/process", "/help/other", "/advocate"].some(p => redirectPath.to.startsWith(p));
+      setTimeout(() => {
+        const redirectMsg = {
+          role: "model",
+          parts: [{ text: isDistress
+            ? "I'm sorry you're dealing with this. Let me take you somewhere that can help. Suraksha has your back."
+            : "Sure! Let me take you there. Suraksha has got you covered."
+          }],
+        };
+        setMessages([...updated, redirectMsg]);
+        setLoading(false);
+        setTimeout(() => {
+          router.push(redirectPath.to);
+        }, 800);
+      }, 1500);
+      return;
+    }
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -211,28 +248,28 @@ function Chatbot() {
       });
       const data = await res.json();
 
-      setMessages([
-        ...updated,
-        {
-          role: "model",
-          parts: [{ text: data.reply }],
-        },
-      ]);
+      setTimeout(() => {
+        setMessages([
+          ...updated,
+          {
+            role: "model",
+            parts: [{ text: data.reply }],
+          },
+        ]);
+        setLoading(false);
+      }, 1500);
     } catch (err) {
       console.error("CHAT ERROR: ", err);
-      setMessages([
-        ...updated,
-        {
-          role: "model",
-          parts: [{ text: "Something went wrong. Please call 1930 directly." }],
-        },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-
-    if (redirectPath) {
-      router.push(redirectPath.to);
+      setTimeout(() => {
+        setMessages([
+          ...updated,
+          {
+            role: "model",
+            parts: [{ text: "I'm sorry, something went wrong on my end. Please call 1930 — they can help you right now. You're not alone in this. Suraksha is always here." }],
+          },
+        ]);
+        setLoading(false);
+      }, 1500);
     }
   }
 
@@ -394,7 +431,7 @@ export default function Home() {
 
         {/* Hero */}
         <section className="bg-primary text-primary-foreground">
-            <div className="mx-auto max-w-6xl px-5 py-6 md:py-12">
+          <div className="mx-auto max-w-6xl px-5 py-6 md:py-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -574,12 +611,6 @@ export default function Home() {
                 >
                   Learn more →
                 </Link>
-                <Link
-                  href="/advocate"
-                  className="inline-flex items-center gap-2 rounded-full border-2 border-[#B91C1C] bg-[#B91C1C] px-5 py-2.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5"
-                >
-                  🚨 Talk to a lawyer now
-                </Link>
               </div>
             </FadeUp>
           </div>
@@ -640,9 +671,9 @@ export default function Home() {
                       </FadeUp>
                     ))}
                   </div>
-                  <button className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1a4a2e] px-5 py-2.5 text-sm font-bold text-lime">
+                  <Link href="/rights" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1a4a2e] px-5 py-2.5 text-sm font-bold text-lime">
                     Learn more about your rights →
-                  </button>
+                  </Link>
                 </div>
                 <div className="absolute bottom-0 right-0 opacity-10 pointer-events-none">
                   <svg width="220" height="220" viewBox="0 0 24 24" fill="none" stroke="#1a4a2e" strokeWidth="0.5">
