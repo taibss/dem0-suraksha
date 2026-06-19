@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { HelpfulWidget } from "./helpful-widget";
 import type { Metadata } from "next";
 
 async function getPost(slug: string) {
@@ -45,11 +46,18 @@ function getCategoryColor(category: string): string {
     prevention: "#84cc16",
     legal: "#7c3aed",
     story: "#1a1a1a",
-    "legal-tech": "#DA70D6",
+    "legal-tech": "#51C3DD",
     "practice-guide": "#a855f7",
     "case-study": "#f59e0b",
   };
   return colors[category] ?? "#71717a";
+}
+
+function getCategoryTextColor(category: string): string {
+  const colors: Record<string, string> = {
+    "legal-tech": "#3f22ec",
+  };
+  return colors[category] ?? "#F1FF0Afff";
 }
 
 function extractFaqItems(content: string): { question: string; answer: string }[] {
@@ -149,21 +157,21 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
 
       <SiteHeader />
 
-      <section className="bg-ink text-ink-foreground">
+      <section style={{ backgroundColor: "#AEF5E5" }}>
         <div className="mx-auto max-w-3xl px-5 py-10">
           <span
-            className="inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white"
-            style={{ backgroundColor: getCategoryColor(post.category) }}
+            className="inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest"
+            style={{ backgroundColor: getCategoryColor(post.category), color: getCategoryTextColor(post.category) }}
           >
             {post.categoryLabel}
           </span>
-          <h1 className="mt-4 font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight tracking-tight">
+          <h1 className="mt-4 font-display text-[clamp(1.25rem,3vw,1.75rem)] font-extrabold leading-tight tracking-tight" style={{ color: "#000" }}>
             {post.title}
           </h1>
-          <p className="mt-3 text-lg text-ink-foreground/80">
+          <p className="mt-3 text-lg" style={{ color: "#000", opacity: 0.8 }}>
             {post.excerpt}
           </p>
-          <div className="mt-4 flex items-center gap-4 text-xs text-lime">
+          <div className="mt-4 flex items-center gap-4 text-xs" style={{ color: "#000", opacity: 0.6 }}>
             <span>{post.date}</span>
             <span>{post.readTime}</span>
           </div>
@@ -171,8 +179,9 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
       </section>
 
       <section className="bg-background">
-        <div className="mx-auto max-w-2xl px-5 py-12">
-          <div className="prose prose-lg max-w-none">
+        <div className="mx-auto max-w-3xl px-5 py-12 lg:mx-auto">
+          <div className="rounded-2xl border border-border bg-card p-6 shadow-[4px_4px_0_0_var(--foreground)] sm:p-8 lg:p-10">
+            <div className="prose prose-lg max-w-none">
             <ReactMarkdown
               components={{
                 h2: ({children}) => <h2 className="text-xl font-bold mt-8 mb-3 text-gray-900">{children}</h2>,
@@ -183,6 +192,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
             >
               {post.content}
             </ReactMarkdown>
+            </div>
           </div>
 
           <div className="mt-10 rounded-2xl bg-primary p-6 text-white">
@@ -194,6 +204,10 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
             >
               Get my action plan →
             </Link>
+          </div>
+
+          <div className="mt-10">
+            <HelpfulWidget />
           </div>
 
           <Link href="/blog" className="mt-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">

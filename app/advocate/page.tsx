@@ -93,7 +93,7 @@ function AdvocatePage() {
           <span className="inline-flex items-center gap-1.5 rounded-full border border-lime/30 bg-lime/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-lime">
             Powered by LawgicHub
           </span>
-          <h1 className="mt-4 font-display text-[clamp(1.5rem,5vw,2.25rem)] font-extrabold leading-[1.02] tracking-tight">
+          <h1 className="mt-4 font-display text-[clamp(1.25rem,3vw,1.75rem)] font-extrabold leading-[1.02] tracking-tight">
             Talk to a<br />Verified Advocate
           </h1>
           <p className="mt-3 max-w-xl text-base text-ink-foreground/70">
