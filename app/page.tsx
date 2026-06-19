@@ -11,7 +11,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FadeUp } from "@/components/fade-up";
 import splashLogo from "@/assets/lawgichub-logo.png";
 import nyayOwl from "@/assets/suraksha-owl.png";
-import { BLOG_POSTS } from "@/data/blog";
 
 const PULSE = [
   "Senior dodges ₹14L digital arrest call",

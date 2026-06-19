@@ -1,29 +1,51 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { BLOG_POSTS } from "@/data/blog";
+import { supabase } from "@/lib/supabase";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Blog — Suraksha",
 };
 
-function CategoryPill({ category }: { category: string }) {
+function CategoryPill({ category, posts }: { category: string; posts: { category: string; categoryLabel: string }[] }) {
   const styles: Record<string, string> = {
     prevention: "bg-lime text-lime-foreground",
     legal: "bg-primary text-white",
     story: "bg-ink text-ink-foreground",
+    "legal-tech": "",
+    "practice-guide": "bg-purple-100 text-purple-900",
+    "case-study": "bg-amber-100 text-amber-900",
+  };
+  const customBg: Record<string, string> = {
+    "legal-tech": "#DA70D6",
   };
   return (
-    <span className={`inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${styles[category] ?? "bg-muted text-muted-foreground"}`}>
-      {BLOG_POSTS.find((p) => p.category === category)?.categoryLabel ?? category}
+    <span
+      className={`inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${styles[category] ?? "bg-muted text-muted-foreground"}`}
+      style={customBg[category] ? { backgroundColor: customBg[category] } : undefined}
+    >
+      {posts.find((p) => p.category === category)?.categoryLabel ?? category}
     </span>
   );
 }
 
-export default function BlogPage() {
-  const featured = BLOG_POSTS.find((p) => p.featured);
-  const remaining = BLOG_POSTS.filter((p) => !p.featured);
+export default async function BlogPage() {
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("slug, title, excerpt, category, category_label, read_time, date, featured")
+    .order("date", { ascending: false });
+
+  const posts = (data ?? [])
+    .filter((p) => p.category !== "legal-tech")
+    .map((p) => ({
+      ...p,
+      categoryLabel: p.category_label,
+      readTime: p.read_time,
+    }));
+
+  const featured = posts.find((p) => p.featured);
+  const remaining = posts.filter((p) => !p.featured);
 
   return (
     <div className="min-h-screen">
@@ -73,7 +95,7 @@ export default function BlogPage() {
                 href={`/blog/${post.slug}`}
                 className="group flex flex-col rounded-2xl border-2 border-border bg-card p-6 shadow-[4px_4px_0_0_var(--foreground)] transition-transform hover:-translate-y-1"
               >
-                <CategoryPill category={post.category} />
+                <CategoryPill category={post.category} posts={posts} />
                 <h3 className="mt-3 font-display font-bold text-base leading-snug">
                   {post.title}
                 </h3>

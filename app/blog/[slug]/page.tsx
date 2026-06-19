@@ -2,14 +2,25 @@ import Link from "next/link";
 import Script from "next/script";
 import ReactMarkdown from "react-markdown";
 import { notFound } from "next/navigation";
-import { BLOG_POSTS } from "@/data/blog";
+import { supabase } from "@/lib/supabase";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import type { Metadata } from "next";
 
+async function getPost(slug: string) {
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("slug, title, excerpt, category, category_label, read_time, date, featured, content")
+    .eq("slug", slug)
+    .single();
+
+  if (!data) return null;
+  return { ...data, categoryLabel: data.category_label, readTime: data.read_time };
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = await getPost(slug);
   if (!post) return { title: "Blog — Suraksha" };
 
   const url = `https://dem0-suraksha.mukadamtaiba.workers.dev/blog/${post.slug}`;
@@ -27,6 +38,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       canonical: url,
     },
   };
+}
+
+function getCategoryColor(category: string): string {
+  const colors: Record<string, string> = {
+    prevention: "#84cc16",
+    legal: "#7c3aed",
+    story: "#1a1a1a",
+    "legal-tech": "#DA70D6",
+    "practice-guide": "#a855f7",
+    "case-study": "#f59e0b",
+  };
+  return colors[category] ?? "#71717a";
 }
 
 function extractFaqItems(content: string): { question: string; answer: string }[] {
@@ -77,7 +100,7 @@ function extractFaqItems(content: string): { question: string; answer: string }[
 
 export default async function BlogArticle({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = await getPost(slug);
   if (!post) notFound();
 
   const url = `https://dem0-suraksha.mukadamtaiba.workers.dev/blog/${post.slug}`;
@@ -128,7 +151,10 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
 
       <section className="bg-ink text-ink-foreground">
         <div className="mx-auto max-w-3xl px-5 py-10">
-          <span className="inline-block rounded-full bg-lime px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-lime-foreground">
+          <span
+            className="inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white"
+            style={{ backgroundColor: getCategoryColor(post.category) }}
+          >
             {post.categoryLabel}
           </span>
           <h1 className="mt-4 font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight tracking-tight">
