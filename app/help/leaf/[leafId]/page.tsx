@@ -5,8 +5,8 @@ import { useParams, notFound } from "next/navigation";
 import { TREE } from "@/lib/tree";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { ChevronLeft, Home as HomeIcon, AlertTriangle, Shield, Scale, Phone, Upload, Copy, Check, ExternalLink } from "lucide-react";
-import { useRef, useState } from "react";
+import { ChevronLeft, Home as HomeIcon, AlertTriangle, Shield, Scale, Phone, Copy, Check, ExternalLink } from "lucide-react";
+import { useState } from "react";
 
 function portalUrl(leafId: string): string {
   if (/upi|qr|otp|crypto|investment|job|task|sextortion|blackmail|digital_arrest|fake_parcel|threat/.test(leafId)) {
@@ -60,8 +60,6 @@ function ActionItem({ text, index, badge }: { text: string; index: number; badge
 }
 
 function EvidenceChecklist({ items, onCheckedChange }: { items: string[]; onCheckedChange?: (checked: string[]) => void }) {
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [files, setFiles] = useState<string[]>([]);
   const [checked, setChecked] = useState<Set<number>>(new Set());
 
   function handleCheck(index: number) {
@@ -72,11 +70,6 @@ function EvidenceChecklist({ items, onCheckedChange }: { items: string[]; onChec
       onCheckedChange?.(Array.from(next).map(i => items[i]));
       return next;
     });
-  }
-
-  function handleFiles(e: React.ChangeEvent<HTMLInputElement>) {
-    const selected = Array.from(e.target.files || []).map(f => f.name);
-    setFiles(prev => [...prev, ...selected]);
   }
 
   return (
@@ -90,32 +83,6 @@ function EvidenceChecklist({ items, onCheckedChange }: { items: string[]; onChec
           </li>
         ))}
       </ul>
-
-      <div className="mt-4 border-t border-border pt-4">
-        <input
-          ref={fileRef}
-          type="file"
-          multiple
-          accept="image/*,.pdf"
-          className="hidden"
-          onChange={handleFiles}
-        />
-        <button
-          onClick={() => fileRef.current?.click()}
-          className="flex items-center gap-2 rounded-xl border-2 border-dashed border-border px-4 py-2.5 text-sm text-muted-foreground hover:border-foreground hover:text-foreground transition-colors w-full justify-center"
-        >
-          <Upload className="size-4" /> Upload screenshots or proof
-        </button>
-        {files.length > 0 && (
-          <ul className="mt-2 space-y-1">
-            {files.map((f, i) => (
-              <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span className="text-primary">✓</span> {f}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
     </div>
   );
 }
