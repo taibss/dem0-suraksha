@@ -2,20 +2,14 @@ import Link from "next/link";
 import Script from "next/script";
 import ReactMarkdown from "react-markdown";
 import { notFound } from "next/navigation";
-import { supabase } from "@/lib/supabase";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import type { Metadata } from "next";
 
 async function getPost(slug: string) {
-  const { data } = await supabase
-    .from("blog_posts")
-    .select("slug, title, excerpt, category, category_label, read_time, date, featured, content")
-    .eq("slug", slug)
-    .single();
-
-  if (!data) return null;
-  return { ...data, categoryLabel: data.category_label, readTime: data.read_time };
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/api/blog?action=single&slug=${slug}`, { cache: "no-store" });
+  if (!res.ok) return null;
+  return res.json();
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -23,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = await getPost(slug);
   if (!post) return { title: "Blog — Suraksha" };
 
-  const url = `https://dem0-suraksha.mukadamtaiba.workers.dev/blog/${post.slug}`;
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`;
 
   return {
     title: `${post.title} — Suraksha`,
@@ -110,7 +104,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
   const post = await getPost(slug);
   if (!post) notFound();
 
-  const url = `https://dem0-suraksha.mukadamtaiba.workers.dev/blog/${post.slug}`;
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`;
   const faqItems = extractFaqItems(post.content);
 
   const articleSchema = {

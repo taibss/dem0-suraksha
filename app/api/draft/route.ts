@@ -1,5 +1,12 @@
 const GROQ_MODEL = "openai/gpt-oss-120b";
 
+function formatDate(dateStr: string): string {
+  const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return dateStr;
+  const [, year, month, day] = match;
+  return `${day}-${month}-${year}`;
+}
+
 export async function POST(request: Request) {
   const body = await request.json();
   const apiKey = process.env.GROQ_API_KEY;
@@ -38,11 +45,11 @@ If the date is relative like "yesterday" or "2 days ago", figure out the actual 
   }
 
   if (body.action === "draft") {
-    const { leafId, evidenceCount, complaintContext, ...fields } = body;
+    const { leafId, evidenceItems = [], complaintContext, ...fields } = body;
 
     const fieldLines = Object.entries(fields)
       .filter(([, v]) => v)
-      .map(([k, v]) => `${k}: ${v}`)
+      .map(([k, v]) => `${k}: ${formatDate(String(v))}`)
       .join("\n");
 
     let legalSections = "";
@@ -54,8 +61,8 @@ If the date is relative like "yesterday" or "2 days ago", figure out the actual 
       legalSections = "Include a paragraph citing Section 66C (punishment for identity theft) and Section 66D (cheating by impersonation using computer resource) of the Information Technology Act, 2000.";
     }
 
-    const evidenceLine = evidenceCount > 0
-      ? `\nEvidence Attached: ${evidenceCount} file(s) uploaded including screenshots and proof of incident.`
+    const evidenceLine = evidenceItems.length > 0
+      ? `\n\nEvidence the complainant can provide:\n${evidenceItems.map((e: string, i: number) => `${i + 1}. ${e}`).join("\n")}\nInclude a paragraph near the end listing these evidence items and stating that the complainant is ready to furnish them upon investigation.`
       : "";
 
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {

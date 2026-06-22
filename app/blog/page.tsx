@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { supabase } from "@/lib/supabase";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -24,18 +23,9 @@ function AnimatedCard({ children, index }: { children: React.ReactNode; index: n
 }
 
 export default async function BlogPage() {
-  const { data } = await supabase
-    .from("blog_posts")
-    .select("slug, title, excerpt, category, category_label, read_time, date, featured")
-    .order("date", { ascending: false });
-
-  const posts = (data ?? [])
-    .filter((p) => p.category !== "legal-tech")
-    .map((p) => ({
-      ...p,
-      categoryLabel: p.category_label,
-      readTime: p.read_time,
-    }));
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/api/blog?action=list`, { cache: "no-store" });
+  const allPosts = await res.json();
+  const posts = allPosts.filter((p: { category: string }) => p.category !== "legal-tech");
 
   const featured = posts.find((p) => p.featured);
   const remaining = posts.filter((p) => !p.featured);

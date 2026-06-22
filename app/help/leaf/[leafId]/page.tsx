@@ -59,15 +59,24 @@ function ActionItem({ text, index, badge }: { text: string; index: number; badge
   );
 }
 
-function EvidenceChecklist({ items, onFilesChange }: { items: string[]; onFilesChange?: (count: number) => void }) {
+function EvidenceChecklist({ items, onCheckedChange }: { items: string[]; onCheckedChange?: (checked: string[]) => void }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<string[]>([]);
+  const [checked, setChecked] = useState<Set<number>>(new Set());
+
+  function handleCheck(index: number) {
+    setChecked(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
+      onCheckedChange?.(Array.from(next).map(i => items[i]));
+      return next;
+    });
+  }
 
   function handleFiles(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = Array.from(e.target.files || []).map(f => f.name);
-    const updated = [...files, ...selected];
-    setFiles(updated);
-    onFilesChange?.(updated.length);
+    setFiles(prev => [...prev, ...selected]);
   }
 
   return (
@@ -76,7 +85,7 @@ function EvidenceChecklist({ items, onFilesChange }: { items: string[]; onFilesC
         {items.map((e, i) => (
           <li key={i}>
             <label className="flex cursor-pointer items-center gap-2.5">
-              <input type="checkbox" className="size-4 accent-primary" /> {e}
+              <input type="checkbox" checked={checked.has(i)} onChange={() => handleCheck(i)} className="size-4 accent-primary" /> {e}
             </label>
           </li>
         ))}
@@ -214,7 +223,7 @@ export default function LeafPage() {
 
   const [rawInput, setRawInput] = useState("");
   const [parsing, setParsing] = useState(false);
-  const [evidenceCount, setEvidenceCount] = useState(0);
+  const [evidenceItems, setEvidenceItems] = useState<string[]>([]);
 
   async function autoFill() {
     if (!rawInput.trim() || parsing) return;
@@ -268,7 +277,7 @@ export default function LeafPage() {
 
   function buildPayload() {
     const cat = fieldCategory();
-    const base = { leafId, complaintContext, evidenceCount };
+    const base = { leafId, complaintContext, evidenceItems };
     switch (cat) {
       case "financial":
         return { ...base, amount, scammerId, transactionId, date: incidentDate };
@@ -373,7 +382,7 @@ export default function LeafPage() {
               </PlanCard>
 
               <PlanCard icon={<Shield className="size-5" />} eyebrow="Evidence checklist" tint="ink" className="h-full flex flex-col">
-                <EvidenceChecklist items={leaf.evidence} onFilesChange={setEvidenceCount} />
+                <EvidenceChecklist items={leaf.evidence} onCheckedChange={setEvidenceItems} />
               </PlanCard>
 
               <PlanCard icon={<Shield className="size-5" />} eyebrow="Your legal shield" tint="card" className="h-full flex flex-col">
