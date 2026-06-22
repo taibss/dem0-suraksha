@@ -467,20 +467,6 @@ export default function Home() {
                 Report it, get help, and talk to a lawyer. All in one place.
               </p>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 1.82 }}
-              className="mt-6"
-            >
-              <Link
-                href="/scams"
-                className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-foreground bg-primary px-6 py-4 text-base font-semibold text-primary-foreground shadow-[5px_5px_0_0_var(--foreground)] transition-all hover:-translate-y-0.5"
-              >
-                Show me the scams
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </motion.div>
           </div>
         </section>
 
