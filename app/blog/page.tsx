@@ -7,6 +7,17 @@ export const metadata: Metadata = {
   title: "Blog — Suraksha",
 };
 
+type BlogPost = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  categoryLabel: string;
+  readTime: string;
+  date: string;
+  featured: boolean;
+};
+
 function AnimatedCard({ children, index }: { children: React.ReactNode; index: number }) {
   return (
     <div
@@ -24,8 +35,8 @@ function AnimatedCard({ children, index }: { children: React.ReactNode; index: n
 
 export default async function BlogPage() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/api/blog?action=list`, { cache: "no-store" });
-  const allPosts = await res.json();
-  const posts = allPosts.filter((p: { category: string }) => p.category !== "legal-tech");
+  const allPosts: BlogPost[] = await res.json();
+  const posts = allPosts.filter((p) => p.category !== "legal-tech");
 
   const featured = posts.find((p) => p.featured);
   const remaining = posts.filter((p) => !p.featured);

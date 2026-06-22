@@ -6,7 +6,19 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import type { Metadata } from "next";
 
-async function getPost(slug: string) {
+type BlogPost = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  categoryLabel: string;
+  readTime: string;
+  date: string;
+  featured: boolean;
+  content: string;
+};
+
+async function getPost(slug: string): Promise<BlogPost | null> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/api/blog?action=single&slug=${slug}`, { cache: "no-store" });
   if (!res.ok) return null;
   return res.json();
