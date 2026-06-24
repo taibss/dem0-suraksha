@@ -244,12 +244,12 @@ export default function Home() {
                 <FadeUp key={s.n} delay={0.1 + idx * 0.12}>
                   <div
                     className="relative h-full overflow-hidden rounded-2xl p-6"
-                    style={{ backgroundColor: "#1E293B", boxShadow: "4px 4px 0 0 rgba(255,255,255,0.08)" }}
+                    style={{ backgroundColor: "#000000" }}
                   >
                     {/* Background number */}
                     <span
                       className="pointer-events-none absolute -bottom-4 -right-2 font-display font-extrabold text-white select-none"
-                      style={{ fontSize: "8rem", opacity: 0.04, lineHeight: 1 }}
+                      style={{ fontSize: "8rem", opacity: 0.12, lineHeight: 1 }}
                     >
                       {s.n}
                     </span>
@@ -272,7 +272,7 @@ export default function Home() {
               <div className="mt-4 flex flex-wrap gap-3">
                 <Link
                   href="/how-it-works"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#0F172A] transition-colors hover:bg-lime"
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#0F172A] shadow-[3px_3px_0_0_rgba(234,179,8,0.6)] transition-colors hover:bg-lime"
                 >
                   Learn more →
                 </Link>
@@ -468,7 +468,6 @@ export default function Home() {
                       {/* Quote */}
                       <p
                         className="flex-1 text-[14px] leading-[1.7] text-white/80"
-                        style={{ fontFamily: '"JetBrains Mono", "Courier New", Courier, monospace' }}
                       >
                         {t.text}
                       </p>
