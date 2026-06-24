@@ -131,3 +131,32 @@
   pointer-events: none;
 }
 
+.leaflet-tooltip {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.leaflet-tooltip-top::before {
+  display: none !important;
+}
+
+.custom-tooltip-high,
+.custom-tooltip-rising,
+.custom-tooltip-watch {
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  font-family: monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: white !important;
+  white-space: nowrap !important;
+}
+.custom-tooltip-high::before,
+.custom-tooltip-rising::before,
+.custom-tooltip-watch::before { display: none !important; }
+
+.custom-tooltip-high    { background: #DC2626 !important; }
+.custom-tooltip-rising  { background: #D97706 !important; }
+.custom-tooltip-watch   { background: #64748B !important; }
+

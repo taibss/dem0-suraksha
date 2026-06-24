@@ -18,13 +18,13 @@ export default function Scams() {
   return (
     <div className="min-h-screen">
       <SiteHeader />
-      <section className="bg-ink text-ink-foreground">
+      <section className="bg-[#D97706] text-white">
         <div className="mx-auto max-w-6xl px-5 py-14">
-          <span className="eyebrow text-lime">● Mumbai Watch</span>
+          <span className="eyebrow text-white/70">● Mumbai Watch</span>
           <h1 className="mt-3 font-display text-[clamp(2rem,6vw,3.5rem)] font-extrabold leading-[1] tracking-tight">
             Where Mumbai is<br />getting hit.
           </h1>
-          <p className="mt-4 max-w-xl text-ink-foreground/80">
+          <p className="mt-4 max-w-xl text-white/80">
             A live-style view of scam reports across the city.
           </p>
         </div>
