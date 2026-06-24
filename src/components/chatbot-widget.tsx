@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import nyayOwl from "@/assets/suraksha-owl.png";
 
-const WELCOME_TEXT = "Hi, I'm Nyay 👋\n\nTell me what happened and I'll help you understand your options.";
+const WELCOME_TEXT = "Hi, I'm Nyay 👋\n\nTell me what happened. I'll help you understand your options.";
 
 const QUICK_ACTIONS = [
   "I've been scammed",
@@ -273,7 +273,7 @@ export function ChatbotWidget() {
             <div className="group relative transition-all duration-300 hover:-translate-y-1">
               <button
                 onClick={() => setOpen(true)}
-                className="w-[220px] rounded-2xl border border-border bg-card p-4 pb-3.5 text-left shadow-[0_6px_32px_rgba(0,0,0,0.1)] transition-shadow duration-300 hover:shadow-[0_10px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_6px_32px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_10px_40px_rgba(0,0,0,0.45)]"
+                className="w-[280px] rounded-2xl border border-border bg-card p-4 pl-4 pr-12 pb-3 text-left shadow-[0_6px_32px_rgba(0,0,0,0.1)] transition-shadow duration-300 hover:shadow-[0_10px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_6px_32px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_10px_40px_rgba(0,0,0,0.45)]"
               >
                 <div className="flex items-center gap-1.5">
                   <span className="size-1.5 rounded-full bg-emerald-500" />
@@ -281,29 +281,29 @@ export function ChatbotWidget() {
                     Online
                   </span>
                 </div>
-                <p className="mt-2.5 font-display text-[15px] font-bold leading-tight tracking-tight text-foreground">
+                <p className="mt-2 font-display text-[16px] font-extrabold leading-tight tracking-tight text-foreground">
                   Ask Nyay
                 </p>
-                <p className="mt-0.5 text-[11px] font-medium text-muted-foreground">
-                  AI Legal Assistant
+                <p className="mt-0.5 text-[11px] font-semibold text-muted-foreground">
+                  AI Legal Guide
                 </p>
-                <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">
-                  Tell me what happened. I&apos;ll guide you through it.
+                <p className="mt-1.5 text-[13px] leading-[1.5] text-muted-foreground">
+                  Tell me what happened. I&apos;ll help you understand your options.
                 </p>
-                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-[12px] font-bold text-background transition-all duration-200 group-hover:brightness-110">
+                <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-[12px] font-bold text-background transition-all duration-200 group-hover:brightness-110">
                   Let&apos;s talk
                   <span className="text-[10px] opacity-60">→</span>
                 </div>
               </button>
               <div
-                className="absolute -right-2 -bottom-6 cursor-pointer"
+                className="absolute right-1 bottom-0 cursor-pointer"
                 style={{ animation: "nyayBob 4s ease-in-out infinite" }}
                 onClick={() => setOpen(true)}
               >
                 <img
                   src={nyayOwl.src}
                   alt="Nyay assistant"
-                  className="h-[88px] w-[88px] object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+                  className="h-[80px] w-[80px] object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
                 />
               </div>
             </div>

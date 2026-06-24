@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { TREE } from "@/lib/tree";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Phone, Search, ShieldAlert, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeUp } from "@/components/fade-up";
 import splashLogo from "@/assets/lawgichub-logo.png";
@@ -220,20 +220,49 @@ export default function Home() {
                 Spot it. Stop it. Report it.
               </h2>
             </FadeUp>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
               {[
-                { n: "01", title: "Spot it", body: "Tell us what happened — takes 2 minutes. We match your situation to the exact scam type." },
-                { n: "02", title: "Stop it", body: "Get your action plan instantly. Know exactly what to do, what not to do, and who to call." },
-                { n: "03", title: "Report it", body: "File your complaint step by step. Talk to a verified advocate anytime — free first consultation." },
+                {
+                  n: "01",
+                  title: "Spot it",
+                  body: "Tell us what happened — takes 2 minutes. We match your situation to the exact scam type.",
+                  icon: <Search size={22} strokeWidth={2} />,
+                },
+                {
+                  n: "02",
+                  title: "Stop it",
+                  body: "Get your action plan instantly. Know exactly what to do, what not to do, and who to call.",
+                  icon: <ShieldAlert size={22} strokeWidth={2} />,
+                },
+                {
+                  n: "03",
+                  title: "Report it",
+                  body: "File your complaint step by step. Talk to a verified advocate anytime — free first consultation.",
+                  icon: <FileText size={22} strokeWidth={2} />,
+                },
               ].map((s, idx) => (
                 <FadeUp key={s.n} delay={0.1 + idx * 0.12}>
-                  <div className="flex md:flex-col items-start gap-4 rounded-2xl border border-border bg-background p-6">
-                    <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-lime font-mono text-sm font-bold text-lime-foreground">
+                  <div
+                    className="relative h-full overflow-hidden rounded-2xl p-6"
+                    style={{ backgroundColor: "#1E293B", boxShadow: "4px 4px 0 0 rgba(255,255,255,0.08)" }}
+                  >
+                    {/* Background number */}
+                    <span
+                      className="pointer-events-none absolute -bottom-4 -right-2 font-display font-extrabold text-white select-none"
+                      style={{ fontSize: "8rem", opacity: 0.04, lineHeight: 1 }}
+                    >
                       {s.n}
-                    </div>
-                    <div>
-                      <div className="font-display text-xl font-bold">{s.title}</div>
-                      <p className="mt-1 text-sm text-muted-foreground">{s.body}</p>
+                    </span>
+
+                    <div className="relative z-10">
+                      <span className="mb-3 block font-mono text-xs font-bold text-[#DC2626]">
+                        {s.n}
+                      </span>
+                      <div className="mb-3 inline-flex items-center justify-center size-12 rounded-xl bg-[#DC2626] text-white">
+                        {s.icon}
+                      </div>
+                      <div className="font-display text-xl font-extrabold text-white">{s.title}</div>
+                      <p className="mt-1 text-sm text-white/60 leading-relaxed">{s.body}</p>
                     </div>
                   </div>
                 </FadeUp>
@@ -243,7 +272,7 @@ export default function Home() {
               <div className="mt-4 flex flex-wrap gap-3">
                 <Link
                   href="/how-it-works"
-                  className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-ink-foreground"
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#0F172A] transition-colors hover:bg-lime"
                 >
                   Learn more →
                 </Link>
@@ -331,29 +360,144 @@ export default function Home() {
               <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">What happens next</p>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-4">
+              <h2 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight mb-8">
                 Here's exactly what happens after you report.
               </h2>
             </FadeUp>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {[
-                { step: "1", label: "Day 0", title: "You report", body: "Tell us what happened via the chatbot or help flow. Takes 2 minutes." },
-                { step: "2", label: "Hour 1", title: "We guide you", body: "You get an instant action plan — what to do, who to call, what evidence to save." },
-                { step: "3", label: "24 hours", title: "Lawyer reviews", body: "A verified advocate reviews your case and calls you back if needed." },
-                { step: "4", label: "72 hours", title: "Bank or police acts", body: "Funds can be frozen. FIR gets filed. The system starts moving." },
-              ].map((s, idx) => (
-                <FadeUp key={s.step} delay={0.1 + idx * 0.1}>
-                  <div className="rounded-2xl border border-border bg-background p-6 h-full flex flex-col">
-                    <div className="flex items-center justify-center size-8 rounded-full bg-primary text-white text-xs font-bold shrink-0">
-                      {s.step}
+            <FadeUp delay={0.2}>
+              <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-4 items-start">
+                {[
+                  { label: "DAY 0", title: "You report", body: "Tell us what happened via the chatbot or help flow. Takes 2 minutes." },
+                  { label: "HOUR 1", title: "We guide you", body: "You get an instant action plan — what to do, who to call, what evidence to save." },
+                  { label: "24 HOURS", title: "Lawyer reviews", body: "A verified advocate reviews your case and calls you back if needed." },
+                  { label: "72 HOURS", title: "Bank or police acts", body: "Funds can be frozen. FIR gets filed. The system starts moving." },
+                ].map((s, idx) => (
+                  <Fragment key={s.label}>
+                    <div className="border-b-2 border-[#DC2626] pb-4">
+                      <p className="font-display font-extrabold text-2xl text-[#DC2626] opacity-90 leading-none">
+                        {s.label}
+                      </p>
+                      <p className="mt-3 font-bold text-sm text-foreground">{s.title}</p>
+                      <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{s.body}</p>
                     </div>
-                    <p className="mt-3 text-xs font-mono text-muted-foreground">{s.label}</p>
-                    <p className="mt-1 font-display font-bold text-base">{s.title}</p>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+                    {idx < 3 && (
+                      <span className="text-[#DC2626] text-xl font-bold opacity-50 pt-1">→</span>
+                    )}
+                  </Fragment>
+                ))}
+              </div>
+            </FadeUp>
+          </div>
+        </section>
+
+        {/* Testimonials */}
+        <section style={{ backgroundColor: "#f0f0f0ff" }}>
+          <div className="mx-auto max-w-6xl px-5 py-8">
+            <FadeUp delay={0}>
+              <span className="inline-flex items-center rounded-full bg-lime px-4 py-1.5 text-xs font-bold tracking-widest text-lime-foreground">
+                STORIES FROM PEOPLE WE HELPED
+              </span>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h2 className="mt-3 font-display text-[clamp(1.5rem,4vw,2.5rem)] font-extrabold leading-tight tracking-tight">
+                People who took action.
+              </h2>
+            </FadeUp>
+
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                {
+                  text: "I lost ₹23,000 in a UPI scam. Called 1930 within 20 minutes of finding Suraksha. The money was frozen before it moved. I still can't believe it worked.",
+                  name: "Priya M.",
+                  city: "Mumbai",
+                  color: "#2B4AE8",
+                },
+                {
+                  text: "My 64-year-old father got a digital arrest call. He was on the phone for 3 hours before I found out. Suraksha's guide helped us report it the same night.",
+                  name: "Rohan S.",
+                  city: "Thane",
+                  color: "#16A34A",
+                },
+                {
+                  text: "I was too embarrassed to tell anyone I got scammed on OLX. Suraksha was the first place I went. No judgement, just steps. Filed my complaint in under 10 minutes.",
+                  name: "Ananya K.",
+                  city: "Pune",
+                  color: "#DC2626",
+                },
+                {
+                  text: "The complaint Suraksha generated for me was more professional than what I would have written myself. Submitted it to cybercrime.gov.in and got a reference number the same day.",
+                  name: "Vikram T.",
+                  city: "Navi Mumbai",
+                  color: "#D97706",
+                },
+                {
+                  text: "Someone was threatening to share my photos. I panicked. Suraksha told me exactly what to do — don't pay, save evidence, call 1930. The advocate called me within 2 hours.",
+                  name: "Anonymous",
+                  city: "Mumbai",
+                  color: "#7C3AED",
+                },
+                {
+                  text: "Shared Suraksha with my entire family WhatsApp group after my aunt got scammed. Everyone should have this bookmarked.",
+                  name: "Meera R.",
+                  city: "Borivali",
+                  color: "#0891B2",
+                },
+              ].map((t, idx) => (
+                <FadeUp key={idx} delay={0.1 + idx * 0.08}>
+                  <div
+                    className="relative flex flex-col h-full rounded-xl border border-white/10 overflow-hidden"
+                    style={{ backgroundColor: "#1E293B", borderLeftColor: t.color, borderLeftWidth: "4px" }}
+                  >
+                    <div className="flex flex-col h-full p-6">
+                      {/* Avatar + Case label */}
+                      <div className="mb-4 flex items-center gap-2.5">
+                        <div
+                          className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
+                          style={{ backgroundColor: t.color }}
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M5 20c0-4 3.5-7 7-7s7 3 7 7" />
+                          </svg>
+                        </div>
+                        <span className="font-bold text-[11px] uppercase tracking-[0.15em] text-white/80">
+                          Case #{String(idx + 1).padStart(3, "0")}
+                        </span>
+                      </div>
+
+                      {/* Quote */}
+                      <p
+                        className="flex-1 text-[14px] leading-[1.7] text-white/80"
+                        style={{ fontFamily: '"JetBrains Mono", "Courier New", Courier, monospace' }}
+                      >
+                        {t.text}
+                      </p>
+
+                      {/* Divider */}
+                      <div className="my-4 border-t border-white/10" />
+
+                      {/* Name & city */}
+                      <p className="text-sm font-bold text-white">{t.name}</p>
+                      <p className="text-xs text-white/70">{t.city}</p>
+
+                      {/* Filed footer */}
+                      <p
+                        className="mt-3 text-[10px] uppercase tracking-[0.12em] text-white/25"
+                        style={{ fontFamily: '"JetBrains Mono", "Courier New", Courier, monospace' }}
+                      >
+                        Filed with cybercrime.gov.in
+                      </p>
+                    </div>
                   </div>
                 </FadeUp>
               ))}
             </div>
+
+            <FadeUp delay={0.7}>
+              <p className="mt-6 text-xs text-muted-foreground italic">
+                Names and identifying details may be changed to protect privacy.
+              </p>
+            </FadeUp>
           </div>
         </section>
 
