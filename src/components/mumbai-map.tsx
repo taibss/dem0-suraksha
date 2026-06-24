@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Circle, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-const HOTSPOTS = [
+type Severity = "high" | "rising" | "watch";
+
+const HOTSPOTS: { lat: number; lng: number; area: string; label: string; type: string; severity: Severity }[] = [
   { lat: 19.1136, lng: 72.8697, area: "Andheri / Jogeshwari", label: "Z1 · Andheri",   type: "UPI fraud · fake job rackets",   severity: "high"   },
   { lat: 19.2307, lng: 72.8567, area: "Borivali / Kandivali", label: "Z1 · Borivali",  type: "Digital arrest calls",           severity: "high"   },
   { lat: 19.2183, lng: 72.9781, area: "Thane",                label: "Z3 · Thane",     type: "Investment / trading traps",     severity: "rising" },
@@ -14,8 +16,8 @@ const HOTSPOTS = [
   { lat: 18.9322, lng: 72.8264, area: "Fort / Colaba",        label: "Z4 · Colaba",    type: "Courier / customs scams",        severity: "watch"  },
 ];
 
-const COLOR = { high: "#DC2626", rising: "#D97706", watch: "#64748B" };
-const RADIUS = { high: 1800, rising: 1200, watch: 800 };
+const COLOR: Record<Severity, string> = { high: "#DC2626", rising: "#D97706", watch: "#64748B" };
+const RADIUS: Record<Severity, number> = { high: 1800, rising: 1200, watch: 800 };
 
 export default function MumbaiMap() {
   const [mounted, setMounted] = useState(false);
