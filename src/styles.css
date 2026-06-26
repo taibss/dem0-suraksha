@@ -120,6 +120,19 @@
   50% { transform: translateY(-4px); }
 }
 
+@keyframes nyayPop {
+  0%, 45%, 100% { opacity: 0; transform: translateY(8px); }
+  15%, 35% { opacity: 1; transform: translateY(0); }
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 .zone-label {
   background: transparent !important;
   border: none !important;

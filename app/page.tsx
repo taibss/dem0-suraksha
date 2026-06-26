@@ -365,7 +365,7 @@ export default function Home() {
               </h2>
             </FadeUp>
             <FadeUp delay={0.2}>
-              <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-4 items-start">
+              <div className="scrollbar-none flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:items-start md:overflow-visible md:pb-0" style={{ WebkitOverflowScrolling: "touch" }}>
                 {[
                   { label: "DAY 0", title: "You report", body: "Tell us what happened via the chatbot or help flow. Takes 2 minutes." },
                   { label: "HOUR 1", title: "We guide you", body: "You get an instant action plan — what to do, who to call, what evidence to save." },
@@ -373,7 +373,7 @@ export default function Home() {
                   { label: "72 HOURS", title: "Bank or police acts", body: "Funds can be frozen. FIR gets filed. The system starts moving." },
                 ].map((s, idx) => (
                   <Fragment key={s.label}>
-                    <div className="border-b-2 border-[#DC2626] pb-4">
+                    <div className="min-w-[160px] shrink-0 border-b-2 border-[#DC2626] pb-4 md:min-w-0 md:shrink">
                       <p className="font-display font-extrabold text-2xl text-[#DC2626] opacity-90 leading-none">
                         {s.label}
                       </p>
@@ -381,7 +381,7 @@ export default function Home() {
                       <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{s.body}</p>
                     </div>
                     {idx < 3 && (
-                      <span className="text-[#DC2626] text-xl font-bold opacity-50 pt-1">→</span>
+                      <span className="hidden text-[#DC2626] text-xl font-bold opacity-50 pt-1 md:block">→</span>
                     )}
                   </Fragment>
                 ))}
