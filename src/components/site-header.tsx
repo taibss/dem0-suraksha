@@ -19,15 +19,14 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
-        <Link href="/" className="flex flex-col text-xl font-bold tracking-tight">
-          <div className="flex items-center gap-3">
-            <img src={logo.src} alt="Suraksha" className="h-16 w-auto object-contain" />
-            <span className="flex items-center gap-1.5">
+        <Link href="/" className="flex flex-col tracking-tight">
+          <div className="flex items-center gap-0.5">
+            <img src={logo.src} alt="Suraksha" className="h-16 w-auto object-contain mt-1" />
+            <span className="text-3xl font-extrabold leading-none">
               Suraksha
-              <span className="size-2 rounded-full bg-primary" aria-hidden />
             </span>
           </div>
-          <span className="text-xs font-medium text-primary ml-[76px] -mt-1">Powered by LawgicHub</span>
+          <span className="ml-[66px] -mt-2.5 text-[13px] font-medium tracking-[-0.01em] opacity-80 text-[#475569]">Powered by LawgicHub</span>
         </Link>
 
         {/* Desktop nav */}

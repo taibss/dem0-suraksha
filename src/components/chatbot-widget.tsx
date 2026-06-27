@@ -151,6 +151,7 @@ const WELCOME_MSG: Message = { role: "model", text: WELCOME_TEXT };
 
 export function ChatbotWidget() {
   const [visible, setVisible] = useState(false);
+  const [bubbleVisible, setBubbleVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => {
     if (typeof window !== "undefined") {
@@ -176,6 +177,15 @@ export function ChatbotWidget() {
     const timer = setTimeout(() => setVisible(true), 800);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (visible && !open) {
+      const show = setTimeout(() => setBubbleVisible(true), 300);
+      return () => clearTimeout(show);
+    } else {
+      setBubbleVisible(false);
+    }
+  }, [visible, open]);
 
   useEffect(() => {
     try {
@@ -272,10 +282,13 @@ export function ChatbotWidget() {
               className="fixed bottom-0 right-0 z-50 flex flex-col items-end pr-4"
             >
               {/* Speech bubble */}
-              <button
-                onClick={() => setOpen(true)}
-                className="relative mb-3 max-w-[220px] rounded-xl bg-white px-4 py-3 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1 dark:bg-card dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
-              >
+              {bubbleVisible && (
+                <motion.button
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  onClick={() => setOpen(true)}
+                  className="relative mb-3 max-w-[220px] rounded-xl bg-white px-4 py-3 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all hover:-translate-y-1 dark:bg-card dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+                >
                 <div className="flex items-center justify-center gap-1.5">
                   <span className="size-1.5 rounded-full bg-emerald-500" />
                   <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -290,7 +303,8 @@ export function ChatbotWidget() {
                 </p>
                 {/* Triangle pointer */}
                 <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-0 w-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-white dark:border-t-card" />
-              </button>
+                </motion.button>
+              )}
 
               {/* Owl */}
               <button
